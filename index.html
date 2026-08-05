@@ -20,7 +20,7 @@ font-size:15px;font-weight:600;cursor:pointer}
 var SECRET=btoa("831576");
 function check(){
   var v=document.getElementById('pw').value.trim();
-  if(btoa(v)===SECRET){location.href="海南出海服务平台_买家门户_高保真原型.html";}
+  if(btoa(v)===SECRET){location.href="https://Linjieqiong001.github.io/hainan-buyer-portal/%E6%B5%B7%E5%8D%97%E5%87%BA%E6%B5%B7%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0_%E4%B9%B0%E5%AE%B6%E9%97%A8%E6%88%B7_%E9%AB%98%E4%BF%9D%E7%9C%9F%E5%8E%9F%E5%9E%8B.html";}
   else{document.getElementById('err').textContent='密码错误，请重试';}
 }
 document.getElementById('pw').addEventListener('keydown',function(e){if(e.key==='Enter')check();});
