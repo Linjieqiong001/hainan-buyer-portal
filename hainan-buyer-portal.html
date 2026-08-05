@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hainan Export Platform · Buyer Portal</title>
+<style>
+  /* ============ DESIGN TOKENS (from ui-ux-pro-max design system) ============ */
+  :root{
+    --color-primary:#0F172A;
+    --color-on-primary:#FFFFFF;
+    --color-secondary:#334155;
+    --color-accent:#0369A1;
+    --color-accent-hover:#075E9C;
+    --color-accent-soft:#E0F2FE;
+    --color-bg:#F8FAFC;
+    --color-surface:#FFFFFF;
+    --color-foreground:#020617;
+    --color-text:#1E293B;
+    --color-muted:#64748B;
+    --color-muted-bg:#E8ECF1;
+    --color-border:#E2E8F0;
+    --color-destructive:#DC2626;
+    --color-success:#059669;
+    --color-warning:#D97706;
+    --radius:14px;
+    --radius-sm:9px;
+    --radius-lg:20px;
+    --shadow-sm:0 1px 2px rgba(15,23,42,.06), 0 1px 3px rgba(15,23,42,.08);
+    --shadow:0 4px 12px rgba(15,23,42,.07), 0 2px 4px rgba(15,23,42,.04);
+    --shadow-lg:0 18px 40px rgba(15,23,42,.14);
+    --nav-h:64px;
+    --maxw:1320px;
+    --sp:8px;
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,'PingFang SC','Microsoft YaHei',sans-serif;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{font-family:var(--font);color:var(--color-text);background:var(--color-bg);-webkit-font-smoothing:antialiased;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none}
+  .icon{width:20px;height:20px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .icon-xs{width:13px;height:13px}
+  .icon-sm{width:16px;height:16px}
+  .icon-lg{width:26px;height:26px}
+
+  /* ============ PAGE ============ */
+  .viewport{min-height:100vh;background:#fff}
+
+  /* ============ TOP PROMO ============ */
+  .promo{background:var(--color-primary);color:#cbd5e1;font-size:12.5px;text-align:center;padding:7px 16px;letter-spacing:.2px}
+  .promo b{color:#fff;font-weight:600}
+
+  /* ============ NAV ============ */
+  nav.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--color-border)}
+  .nav-inner{max-width:var(--maxw);margin:0 auto;height:var(--nav-h);display:flex;align-items:center;gap:22px;padding:0 24px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;color:var(--color-primary);letter-spacing:-.3px}
+  .brand .logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--color-primary),var(--color-accent));display:flex;align-items:center;justify-content:center;color:#fff}
+  .brand small{display:block;font-size:10px;font-weight:500;color:var(--color-muted);letter-spacing:.5px}
+  .nav-links{display:flex;gap:4px;align-items:center}
+  .nav-links a{padding:9px 14px;border-radius:9px;font-size:14.5px;font-weight:500;color:var(--color-secondary);transition:.15s}
+  .nav-links a:hover{background:var(--color-bg);color:var(--color-primary)}
+  .nav-links a.active{background:var(--color-accent-soft);color:var(--color-accent);font-weight:600}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+  .pill{display:flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid var(--color-border);border-radius:10px;font-size:13.5px;font-weight:500;color:var(--color-secondary);background:#fff;transition:.15s}
+  .pill:hover{border-color:var(--color-accent);color:var(--color-accent)}
+  .pill .code{font-weight:700;color:var(--color-primary)}
+  .avatar{width:36px;height:36px;border-radius:50%;background:var(--color-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;cursor:pointer}
+  .btn{cursor:pointer;border-radius:10px;font-weight:600;font-size:14px;padding:10px 18px;transition:.15s;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+  .btn-primary{background:var(--color-accent);color:#fff}
+  .btn-primary:hover{background:var(--color-accent-hover)}
+  .btn-dark{background:var(--color-primary);color:#fff}
+  .btn-dark:hover{background:#1e293b}
+  .btn-ghost{background:#fff;color:var(--color-primary);border-color:var(--color-border)}
+  .btn-ghost:hover{border-color:var(--color-accent);color:var(--color-accent)}
+  .btn-block{width:100%}
+
+  /* dropdown */
+  .dd{position:relative}
+  .dd-menu{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1px solid var(--color-border);border-radius:12px;box-shadow:var(--shadow-lg);padding:6px;min-width:180px;display:none;z-index:60}
+  .dd-menu.open{display:block;animation:pop .14s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .dd-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:8px;font-size:13.5px;color:var(--color-text);transition:.12s}
+  .dd-item:hover{background:var(--color-bg)}
+  .dd-item.sel{color:var(--color-accent);font-weight:600}
+  .dd-item .tick{margin-left:auto}
+
+  /* ============ VIEWS ============ */
+  .view{display:none}
+  .view.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* ============ HERO ============ */
+  .hero{color:#fff;padding:54px 0 64px;position:relative;overflow:hidden;min-height:420px;display:flex;align-items:center}
+  .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,23,42,.82),rgba(15,23,42,.45));z-index:1}
+  .hero::after{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.07) 1px,transparent 0);background-size:26px 26px;opacity:.5;z-index:1}
+  .hero .wrap{position:relative;z-index:2;width:100%}
+  .hero h1{font-size:42px;line-height:1.12;font-weight:800;letter-spacing:-1px;max-width:760px}
+  .hero h1 .hl{color:#7DD3FC}
+  .hero p.sub{margin-top:16px;font-size:17px;color:#e2e8f0;max-width:620px}
+  .hero-slides{position:absolute;inset:0;z-index:0}
+  .hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1s ease-in-out}
+  .hero-slide.active{opacity:1}
+  .hero-dots{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:10px}
+  .hero-dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:.2s}
+  .hero-dots span.active{background:#fff;width:26px;border-radius:5px}
+  .search-box{margin-top:30px;background:#fff;border-radius:14px;padding:8px;display:flex;gap:8px;max-width:760px;box-shadow:var(--shadow-lg);align-items:center}
+  .search-box .cat-select{border-right:1px solid var(--color-border);padding:0 14px;display:flex;align-items:center;gap:8px;color:var(--color-secondary);font-weight:600;font-size:14px;cursor:pointer}
+  .search-box input{flex:1;border:none;outline:none;font-size:15px;padding:10px 6px;color:var(--color-foreground);background:transparent}
+  .search-box .btn{padding:13px 22px}
+  .chips{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:13px;color:#94a3b8}
+  .chips a{padding:5px 12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);border-radius:20px;color:#e2e8f0;transition:.15s}
+  .chips a:hover{background:rgba(255,255,255,.22);color:#fff}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);margin-top:-34px;position:relative;z-index:5;box-shadow:var(--shadow)}
+  .stat{padding:22px 26px;border-right:1px solid var(--color-border)}
+  .stat:last-child{border-right:none}
+  .stat .num{font-size:30px;font-weight:800;color:var(--color-primary);letter-spacing:-.5px}
+  .stat .lbl{font-size:13px;color:var(--color-muted);margin-top:2px;display:flex;align-items:center;gap:6px}
+
+  /* sections */
+  section.block{padding:48px 0}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
+  .sec-head h2{font-size:24px;font-weight:800;color:var(--color-primary);letter-spacing:-.5px}
+  .sec-head p{font-size:14px;color:var(--color-muted);margin-top:4px}
+  .link-more{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:600;color:var(--color-accent)}
+
+  /* category grid */
+  .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .cat-card{position:relative;border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:12px;transition:.18s;cursor:pointer;min-height:180px;background-size:cover;background-position:center;color:#fff;overflow:hidden;border:none}
+  .cat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+  .cat-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,23,42,.25),rgba(15,23,42,.72));z-index:0}
+  .cat-card>*{position:relative;z-index:1}
+  .cat-ico{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+  .cat-card h3{font-size:17px;font-weight:800;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.35)}
+  .cat-card span{font-size:13px;color:rgba(255,255,255,.88);text-shadow:0 1px 3px rgba(0,0,0,.35)}
+
+  /* product grid */
+  .pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .pcard{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);overflow:hidden;transition:.18s;cursor:pointer;display:flex;flex-direction:column}
+  .pcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:#cbd5e1}
+  .pthumb{height:170px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .pthumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+  .pthumb .ph-ico{opacity:.9;z-index:0}
+  .pthumb .ribbon,.pthumb .fav{z-index:2}
+  .pthumb .ribbon{position:absolute;top:10px;left:10px;background:rgba(15,23,42,.78);color:#fff;font-size:11px;font-weight:600;padding:4px 9px;border-radius:6px;backdrop-filter:blur(4px)}
+  .pthumb .fav{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;color:var(--color-secondary)}
+  .pbody{padding:14px 15px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .pco{font-size:12px;color:var(--color-accent);font-weight:600}
+  .pname{font-size:14.5px;font-weight:600;color:var(--color-foreground);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .pmeta{font-size:12px;color:var(--color-muted);display:flex;align-items:center;gap:5px}
+  .pprice{margin-top:auto;display:flex;align-items:baseline;gap:8px}
+  .pprice .now{font-size:18px;font-weight:800;color:var(--color-primary)}
+  .pprice .orig{font-size:12px;color:var(--color-muted)}
+
+  /* supplier cards */
+  .sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .scard{position:relative;border-radius:var(--radius);min-height:200px;background-size:cover;background-position:center;display:flex;flex-direction:column;transition:.18s;cursor:pointer;overflow:hidden;border:none}
+  .scard:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+  .scard-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,23,42,.35),rgba(15,23,42,.78));z-index:0}
+  .scard-inner{position:relative;z-index:1;padding:20px;display:flex;flex-direction:column;gap:14px;height:100%;justify-content:space-between}
+  .srow{display:flex;align-items:center;gap:13px}
+  .slogo{width:52px;height:52px;border-radius:13px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:19px;flex:none;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+  .scard h3{font-size:16px;font-weight:700;color:#fff;line-height:1.2;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+  .scard .stag{font-size:11.5px;color:rgba(255,255,255,.85);margin-top:3px;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+  .sstats{display:flex;gap:18px;border-top:1px solid rgba(255,255,255,.2);padding-top:13px;font-size:12.5px;color:rgba(255,255,255,.8)}
+  .sstats b{display:block;color:#fff;font-size:15px;font-weight:700}
+
+  /* specialty */
+  .spec{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .spec-card{border-radius:var(--radius-lg);padding:26px;color:#fff;position:relative;overflow:hidden;min-height:200px;display:flex;flex-direction:column;justify-content:flex-end}
+  .spec-card h3{font-size:20px;font-weight:800}
+  .spec-card p{font-size:13.5px;opacity:.9;margin-top:6px;max-width:80%}
+  .spec-card .btn{margin-top:14px;align-self:flex-start;background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3)}
+  .spec-card .btn:hover{background:rgba(255,255,255,.28)}
+
+  /* CTA band */
+  .cta{background:linear-gradient(135deg,var(--color-accent),#0e7490);border-radius:var(--radius-lg);padding:38px 44px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .cta h2{font-size:26px;font-weight:800}
+  .cta p{opacity:.92;margin-top:6px;font-size:14.5px}
+
+  /* ============ PRODUCTS PAGE LAYOUT ============ */
+  .pl-header{background:var(--color-primary);color:#fff;padding:30px 0}
+  .pl-header h1{font-size:28px;font-weight:800}
+  .pl-header p{color:#cbd5e1;margin-top:6px;font-size:14px}
+  .pl-layout{display:grid;grid-template-columns:240px 1fr;gap:26px;padding:28px 0 48px;align-items:start}
+  .filters{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);padding:18px;position:sticky;top:88px}
+  .filters h4{font-size:13px;font-weight:700;color:var(--color-primary);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+  .filters .fgroup{padding:14px 0;border-bottom:1px solid var(--color-border)}
+  .filters .fgroup:last-child{border-bottom:none;padding-bottom:0}
+  .ftree{list-style:none;display:flex;flex-direction:column;gap:3px}
+  .ftree li{padding:8px 10px;border-radius:8px;font-size:14px;color:var(--color-secondary);cursor:pointer;display:flex;align-items:center;gap:9px;transition:.12s}
+  .ftree li:hover{background:var(--color-bg)}
+  .ftree li.active{background:var(--color-accent-soft);color:var(--color-accent);font-weight:600}
+  .ftree li .n{margin-left:auto;font-size:12px;color:var(--color-muted);background:var(--color-muted-bg);border-radius:10px;padding:1px 8px}
+  .range-row{display:flex;gap:8px;align-items:center}
+  .range-row input{width:100%;border:1px solid var(--color-border);border-radius:8px;padding:8px 10px;font-size:13px;outline:none}
+  .check{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--color-text);padding:6px 0;cursor:pointer}
+  .check input{width:16px;height:16px;accent-color:var(--color-accent)}
+  .pl-main .toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;position:relative}
+  .toolbar .count{font-size:14px;color:var(--color-muted)}
+  .toolbar .count b{color:var(--color-foreground);font-weight:700}
+  .deliv{margin-left:auto;display:flex;align-items:center;gap:8px;border:1px solid var(--color-border);border-radius:10px;padding:9px 13px;font-size:13.5px;color:var(--color-secondary);cursor:pointer;background:#fff}
+  .deliv:hover{border-color:var(--color-accent);color:var(--color-accent)}
+  .sort{display:flex;align-items:center;gap:8px;border:1px solid var(--color-border);border-radius:10px;padding:9px 13px;font-size:13.5px;font-weight:600;color:var(--color-secondary);background:#fff;cursor:pointer}
+  .sort:hover{border-color:var(--color-accent)}
+
+  /* ============ PRODUCT DETAIL ============ */
+  .pd{display:flex;flex-direction:column;gap:40px;padding:34px 0 56px}
+  .pd-top{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:start}
+  .pd-gallery{position:sticky;top:86px}
+  .pd-gallery .main-img{height:420px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background:var(--color-bg)}
+  .pd-gallery .main-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+  .pd-gallery .img-tag{position:absolute;top:14px;left:14px;background:rgba(15,23,42,.82);color:#fff;font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:20px;display:flex;align-items:center;gap:6px;z-index:2}
+  .pd-gallery .zoom-hint{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.9);color:var(--color-secondary);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.08);z-index:2}
+  .pd-gallery .thumbs{display:flex;gap:10px;margin-top:12px}
+  .pd-gallery .thumbs .t{width:74px;height:74px;border-radius:10px;border:2px solid transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+  .pd-gallery .thumbs .t img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+  .pd-gallery .thumbs .t.active{border-color:var(--color-accent)}
+  .pd-info h1{font-size:28px;font-weight:800;color:var(--color-primary);letter-spacing:-.5px;line-height:1.2}
+  .pd-info .tags{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .pd-info .tags span{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--color-bg);color:var(--color-secondary);border:1px solid var(--color-border)}
+  .pd-info .tags span.accent{background:rgba(3,105,161,.08);color:var(--color-accent);border-color:rgba(3,105,161,.15)}
+  .pd-info .co{font-size:14px;color:var(--color-accent);font-weight:600;margin-top:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+  .pd-price{margin-top:18px;background:linear-gradient(135deg,#fff9f0,#fff);border:1px solid #f5e6d3;border-radius:var(--radius);padding:18px 20px}
+  .pd-price .ref{display:flex;align-items:flex-end;gap:10px}
+  .pd-price .big{font-size:32px;font-weight:800;color:var(--color-primary)}
+  .pd-price .unit{font-size:14px;color:var(--color-muted);margin-bottom:5px}
+  .pd-price .ref-lbl{font-size:12px;color:var(--color-muted);margin-top:4px}
+  .pd-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+  .pd-tier{background:#fff;border:1px solid var(--color-border);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:.15s}
+  .pd-tier:hover{border-color:var(--color-accent)}
+  .pd-tier .qty{font-size:12px;color:var(--color-muted);font-weight:600}
+  .pd-tier .pr{font-size:17px;font-weight:800;color:var(--color-primary);margin-top:4px}
+  .pd-meta{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .pd-meta .m{background:#fff;border:1px solid var(--color-border);border-radius:10px;padding:12px 14px}
+  .pd-meta .m .k{font-size:11.5px;color:var(--color-muted);text-transform:uppercase;letter-spacing:.4px}
+  .pd-meta .m .v{font-size:14px;font-weight:600;color:var(--color-foreground);margin-top:3px}
+  .pd-actions{margin-top:22px;display:flex;gap:12px}
+  .pd-actions .btn{flex:1;padding:14px}
+  .pd-actions .btn-share{padding:14px 16px;display:flex;align-items:center;justify-content:center;border:1px solid var(--color-border);border-radius:10px;background:#fff;color:var(--color-secondary);cursor:pointer;transition:.15s}
+  .pd-actions .btn-share:hover{border-color:var(--color-accent);color:var(--color-accent)}
+  .pd-sup-card{margin-top:18px;border:1px solid var(--color-border);border-radius:var(--radius);padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.15s}
+  .pd-sup-card:hover{border-color:var(--color-accent)}
+  .pd-sup-card .logo{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px}
+  .pd-sup-card .nm{flex:1}
+  .pd-sup-card .nm .t{font-size:15px;font-weight:700;color:var(--color-primary)}
+  .pd-sup-card .nm .s{font-size:12.5px;color:var(--color-muted);margin-top:2px}
+  .pd-sup-card .arr{color:var(--color-muted)}
+  .pd-tabs{margin-top:8px}
+  .pd-tab-nav{display:flex;gap:8px;border-bottom:2px solid var(--color-border);margin-bottom:20px}
+  .pd-tab-nav button{padding:12px 18px;font-size:14px;font-weight:600;color:var(--color-muted);background:transparent;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;transition:.15s}
+  .pd-tab-nav button:hover{color:var(--color-accent)}
+  .pd-tab-nav button.active{color:var(--color-accent);border-bottom-color:var(--color-accent)}
+  .pd-panel{display:none}
+  .pd-panel.active{display:block}
+  .pd-card{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);padding:22px}
+  .pd-card h3{font-size:16px;font-weight:700;color:var(--color-primary);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .pd-desc{font-size:14.5px;color:var(--color-secondary);line-height:1.8}
+  .spec-table{width:100%;border-collapse:collapse;font-size:13.5px}
+  .spec-table td{padding:11px 14px;border:1px solid var(--color-border)}
+  .spec-table td:first-child{background:var(--color-bg);color:var(--color-muted);width:30%;font-weight:600}
+  .trade-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .trade-item{background:var(--color-bg);border:1px solid var(--color-border);border-radius:10px;padding:14px}
+  .trade-item .k{font-size:12px;color:var(--color-muted);font-weight:600}
+  .trade-item .v{font-size:14px;font-weight:700;color:var(--color-primary);margin-top:5px}
+  .cert-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .cert-tag{font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;background:rgba(3,105,161,.08);color:var(--color-accent)}
+  .supplier-prof{display:flex;gap:18px;align-items:flex-start}
+  .supplier-prof .logo{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px}
+  .supplier-prof .meta{flex:1}
+  .supplier-prof .meta h4{font-size:18px;font-weight:800;color:var(--color-primary)}
+  .supplier-prof .meta p{font-size:13.5px;color:var(--color-secondary);margin-top:6px;line-height:1.6}
+  .supplier-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+  .supplier-stats .st{text-align:center;padding:14px;background:var(--color-bg);border-radius:10px}
+  .supplier-stats .st .n{font-size:18px;font-weight:800;color:var(--color-primary)}
+  .supplier-stats .st .l{font-size:11.5px;color:var(--color-muted);margin-top:3px}
+  .rel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
+
+  /* ============ SUPPLIER DETAIL ============ */
+  .sd-hero{position:relative;color:#fff;padding:46px 0;overflow:hidden}
+  .sd-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+  .sd-hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,23,42,.88),rgba(15,23,42,.55));z-index:1}
+  .sd-hero .srow{position:relative;z-index:2;display:flex;align-items:center;gap:18px}
+  .sd-hero .slogo{width:72px;height:72px;border-radius:18px;font-size:26px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+  .sd-hero h1{font-size:26px;font-weight:800}
+  .sd-hero .tags{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .sd-hero .tags span{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);padding:4px 12px;border-radius:20px;font-size:12.5px}
+  .sd-body{display:grid;grid-template-columns:1fr 320px;gap:30px;padding:34px 0 56px;align-items:start}
+  .sd-card{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);padding:22px;margin-bottom:22px}
+  .sd-card h3{font-size:17px;font-weight:700;color:var(--color-primary);margin-bottom:12px;display:flex;align-items:center;gap:9px}
+  .honors{display:flex;gap:14px;flex-wrap:wrap}
+  .honor{width:120px;height:84px;border-radius:10px;border:1px solid var(--color-border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--color-muted);font-size:12px}
+  .sd-gallery{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .sd-gallery img{width:100%;height:110px;object-fit:cover;border-radius:10px;border:1px solid var(--color-border)}
+  .contact-locked{background:var(--color-bg);border:1px dashed var(--color-border);border-radius:var(--radius);padding:22px;text-align:center}
+  .contact-locked .icon{width:34px;height:34px;color:var(--color-accent);margin:0 auto 10px}
+  .contact-locked p{font-size:13.5px;color:var(--color-muted)}
+  .contact-info .ci{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--color-border);font-size:14px}
+  .contact-info .ci:last-child{border-bottom:none}
+  .contact-info .ci .icon{color:var(--color-accent)}
+
+  /* ============ AUTH ============ */
+  .auth{display:grid;grid-template-columns:1fr 1fr;min-height:760px}
+  .auth-left{background:radial-gradient(800px 400px at 70% 10%,rgba(3,105,161,.5),transparent),linear-gradient(135deg,#0F172A,#0b3a5e);color:#fff;padding:56px 56px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+  .auth-left::after{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.06) 1px,transparent 0);background-size:28px 28px}
+  .auth-left>*{position:relative;z-index:2}
+  .auth-left h2{font-size:34px;font-weight:800;line-height:1.15;letter-spacing:-.5px}
+  .auth-left p{color:#cbd5e1;margin-top:16px;font-size:15px;max-width:380px}
+  .auth-points{margin-top:30px;display:flex;flex-direction:column;gap:14px}
+  .auth-points div{display:flex;align-items:center;gap:12px;font-size:14.5px;color:#e2e8f0}
+  .auth-points .ic{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:#7DD3FC}
+  .auth-right{padding:48px 56px;display:flex;flex-direction:column;justify-content:center;background:#fff}
+  .tabs{display:flex;gap:6px;background:var(--color-bg);padding:5px;border-radius:12px;margin-bottom:26px}
+  .tabs button{flex:1;padding:11px;border-radius:9px;font-weight:600;font-size:14.5px;color:var(--color-muted);transition:.15s}
+  .tabs button.active{background:#fff;color:var(--color-primary);box-shadow:var(--shadow-sm)}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:13px;font-weight:600;color:var(--color-secondary);margin-bottom:7px}
+  .field input{width:100%;border:1px solid var(--color-border);border-radius:10px;padding:13px 14px;font-size:14.5px;outline:none;transition:.15s;font-family:inherit}
+  .field input:focus{border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-soft)}
+  .human{display:flex;align-items:center;gap:10px;border:1px solid var(--color-border);border-radius:10px;padding:11px 14px;margin-bottom:18px;cursor:pointer;transition:.15s}
+  .human:hover{border-color:var(--color-accent)}
+  .human .box{width:22px;height:22px;border-radius:6px;border:2px solid var(--color-border);display:flex;align-items:center;justify-content:center;color:#fff;flex:none}
+  .human.done .box{background:var(--color-success);border-color:var(--color-success)}
+  .human span{font-size:13.5px;color:var(--color-secondary)}
+  .auth-note{font-size:12.5px;color:var(--color-muted);text-align:center;margin-top:18px;line-height:1.6}
+  .auth-note a{color:var(--color-accent);font-weight:600}
+
+  /* toast */
+  .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--color-primary);color:#fff;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:var(--shadow-lg);opacity:0;transition:.25s;z-index:200;display:flex;align-items:center;gap:10px}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast .icon{color:#7DD3FC}
+
+  /* ============ FOOTER ============ */
+  footer.site{background:var(--color-primary);color:#94a3b8;padding:48px 0 26px;margin-top:8px}
+  .foot-grid{max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:30px}
+  .foot-brand .brand{color:#fff;margin-bottom:14px}
+  .foot-brand p{font-size:13.5px;line-height:1.7;max-width:280px}
+  .foot-col h5{color:#fff;font-size:14px;font-weight:700;margin-bottom:14px}
+  .foot-col a{display:block;font-size:13.5px;padding:5px 0;transition:.12s}
+  .foot-col a:hover{color:#fff}
+  .foot-bottom{max-width:var(--maxw);margin:30px auto 0;padding:18px 24px 0;border-top:1px solid rgba(255,255,255,.1);font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  /* ============ EMPTY / LOCKED STATE ============ */
+  .empty-state{text-align:center;padding:64px 24px;max-width:460px;margin:0 auto}
+  .empty-state img{width:150px;height:150px;object-fit:contain;margin:0 auto 18px;opacity:.92}
+  .empty-state h3{font-size:20px;color:var(--color-primary);font-weight:800}
+  .empty-state p{color:var(--color-muted);margin-top:10px;font-size:14px;line-height:1.75}
+  .empty-state .btn{margin-top:20px}
+
+  /* ============ INQUIRIES ============ */
+  .badge{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+  .badge .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+  .badge.pending{background:#FEF3C7;color:#92400E}
+  .badge.responded{background:#DBEAFE;color:#1E40AF}
+  .badge.follow{background:#EDE9FE;color:#5B21B6}
+  .badge.converted{background:#D1FAE5;color:#065F46}
+  .badge.closed{background:#E2E8F0;color:#475569}
+  .inq-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px}
+  .inq-stat{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:.15s;border-top:3px solid transparent}
+  .inq-stat:hover{box-shadow:var(--shadow)}
+  .inq-stat.active{border-top-color:var(--color-accent);background:var(--color-accent-soft)}
+  .inq-stat .n{font-size:24px;font-weight:800;color:var(--color-primary);line-height:1}
+  .inq-stat .l{font-size:12.5px;color:var(--color-muted);margin-top:7px;display:flex;align-items:center;gap:6px}
+  .inq-stat .l .dot{width:8px;height:8px;border-radius:50%}
+  .inq-stat .l .dot.pending{background:#F59E0B}.inq-stat .l .dot.responded{background:#3B82F6}.inq-stat .l .dot.follow{background:#8B5CF6}.inq-stat .l .dot.converted{background:#10B981}.inq-stat .l .dot.closed{background:#64748B}
+  .inq-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+  .inq-search{flex:1;min-width:220px;position:relative}
+  .inq-search .icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--color-muted)}
+  .inq-search input{width:100%;border:1px solid var(--color-border);border-radius:10px;padding:11px 13px 11px 40px;font-size:14px;outline:none;background:#fff;transition:.15s;font-family:inherit;color:var(--color-foreground)}
+  .inq-search input:focus{border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-soft)}
+  .inq-count{font-size:13px;color:var(--color-muted);margin-left:auto;white-space:nowrap}
+  .inq-table{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);overflow:hidden}
+  .inq-thead,.inq-row{display:grid;grid-template-columns:2.6fr 1.5fr 1.1fr 1fr 1fr 1.5fr;align-items:center;gap:12px;padding:14px 18px}
+  .inq-thead{background:var(--color-bg);font-size:11.5px;font-weight:700;color:var(--color-muted);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--color-border)}
+  .inq-row{border-bottom:1px solid var(--color-border);transition:.12s;cursor:pointer}
+  .inq-row:last-child{border-bottom:none}
+  .inq-row:hover{background:var(--color-accent-soft)}
+  .inq-row .ttl{font-size:14px;font-weight:700;color:var(--color-primary);line-height:1.3}
+  .inq-row .sub2{font-size:12px;color:var(--color-muted);margin-top:4px}
+  .inq-row .ref{font-size:13px;color:var(--color-secondary)}
+  .inq-ops{display:flex;gap:8px;align-items:center}
+  .inq-status-sel{border:1px solid var(--color-border);border-radius:8px;padding:7px 8px;font-size:12.5px;outline:none;background:#fff;cursor:pointer;color:var(--color-foreground);font-family:inherit}
+  .inq-view-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:8px;background:var(--color-accent);color:#fff;font-size:12.5px;font-weight:600;cursor:pointer;transition:.12s;border:none;white-space:nowrap}
+  .inq-view-btn:hover{background:#0369A1}
+  .inq-detail-wrap{max-width:940px;margin:0 auto;padding:26px 0 54px}
+  .inq-back{display:inline-flex;align-items:center;gap:6px;color:var(--color-accent);font-size:13.5px;font-weight:600;cursor:pointer;margin-bottom:18px}
+  .inq-back:hover{text-decoration:underline}
+  .inq-detail-card{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);padding:26px}
+  .inq-detail-card .dhead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--color-border)}
+  .inq-detail-card .dhead h2{font-size:21px;font-weight:800;color:var(--color-primary);line-height:1.3}
+  .inq-detail-card .dhead .sub{font-size:13px;color:var(--color-muted);margin-top:8px}
+  .inq-overview{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:20px 0;padding:18px;background:var(--color-bg);border-radius:12px}
+  .inq-overview .it .k{font-size:12px;color:var(--color-muted)}
+  .inq-overview .it .v{font-size:14px;font-weight:700;color:var(--color-primary);margin-top:5px;line-height:1.4}
+  .inq-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0 6px}
+  .inq-actions .lbl-s{font-size:13px;color:var(--color-muted);font-weight:600}
+  .st-btn{padding:9px 14px;border-radius:9px;border:1px solid var(--color-border);background:#fff;font-size:13px;font-weight:600;color:var(--color-secondary);cursor:pointer;transition:.12s;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
+  .st-btn:hover{border-color:var(--color-accent);color:var(--color-accent)}
+  .st-btn.cur{background:var(--color-accent);color:#fff;border-color:var(--color-accent)}
+  .st-btn.cur:hover{color:#fff}
+  .inq-msgs-title{font-size:15px;font-weight:800;color:var(--color-primary);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
+  .inq-msgs-title .icon{color:var(--color-accent)}
+  .inq-msg{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--color-border)}
+  .inq-msg:last-child{border-bottom:none}
+  .inq-msg .av{width:38px;height:38px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px}
+  .inq-msg.you .av{background:var(--color-accent)}
+  .inq-msg.sup .av{background:var(--color-primary)}
+  .inq-msg .body{flex:1;min-width:0}
+  .inq-msg .who{font-size:13px;font-weight:700;color:var(--color-primary);display:flex;align-items:center;gap:8px}
+  .inq-msg .time{font-size:11.5px;color:var(--color-muted);font-weight:500}
+  .inq-msg .text{font-size:13.5px;color:var(--color-text);line-height:1.65;margin-top:6px;background:var(--color-bg);border-radius:10px;padding:11px 13px}
+  .inq-msg.you .text{background:var(--color-accent-soft)}
+  .inq-compose{margin-top:18px;background:var(--color-bg);border:1px dashed var(--color-border);border-radius:12px;padding:16px}
+  .inq-compose .ch{font-size:13.5px;font-weight:700;color:var(--color-primary);display:flex;align-items:center;gap:7px;margin-bottom:10px}
+  .inq-compose .ch .icon{color:var(--color-accent)}
+  .inq-compose textarea{width:100%;border:1px solid var(--color-border);border-radius:10px;padding:11px 13px;font-size:14px;outline:none;background:#fff;resize:vertical;font-family:inherit;color:var(--color-foreground)}
+  .inq-compose textarea:focus{border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-soft)}
+  .inq-compose .hint{font-size:12px;color:var(--color-muted);margin-top:9px;line-height:1.6}
+  .inq-compose .row{display:flex;justify-content:flex-end;margin-top:10px}
+  @media(max-width:1100px){
+    .inq-stats{grid-template-columns:repeat(3,1fr)}
+    .inq-overview{grid-template-columns:repeat(2,1fr)}
+    .inq-thead{display:none}
+    .inq-row{grid-template-columns:1fr;gap:6px;padding:14px}
+    .inq-ops{margin-top:4px}
+  }
+  @media(max-width:560px){.inq-stats{grid-template-columns:repeat(2,1fr)}}
+
+  /* ============ ACCOUNT ============ */
+  .acct-layout{display:grid;grid-template-columns:264px 1fr;gap:26px;padding:30px 0 54px;align-items:start}
+  .acct-side{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);overflow:hidden;position:sticky;top:88px}
+  .acct-banner{height:88px;background-size:cover;background-position:center;background-image:url('assets/acc_banner.png')}
+  .acct-id{padding:0 18px 18px;margin-top:-34px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .acct-id .av{width:68px;height:68px;border-radius:50%;border:3px solid #fff;background:var(--color-accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800}
+  .acct-id .nm{font-weight:700;margin-top:10px;color:var(--color-primary);font-size:15px}
+  .acct-id .em{font-size:12.5px;color:var(--color-muted)}
+  .acct-menu{display:flex;flex-direction:column;padding:10px}
+  .acct-menu a{display:flex;align-items:center;gap:10px;padding:11px 16px;font-size:14px;color:var(--color-secondary);border-radius:9px;cursor:pointer;transition:.12s}
+  .acct-menu a:hover{background:var(--color-bg)}
+  .acct-menu a.active{background:var(--color-accent-soft);color:var(--color-accent);font-weight:600}
+  .acct-panel{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);padding:26px;min-height:420px}
+  .acct-panel h3{font-size:18px;font-weight:800;color:var(--color-primary);margin-bottom:4px}
+  .acct-panel .desc{font-size:13px;color:var(--color-muted);margin-bottom:20px}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .form-grid .full{grid-column:1/-1}
+  .addr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .addr-card{border:1px solid var(--color-border);border-radius:12px;padding:16px;position:relative;transition:.15s}
+  .addr-card:hover{box-shadow:var(--shadow)}
+  .addr-card .tag{position:absolute;top:12px;right:12px;font-size:11px;font-weight:700;color:var(--color-accent);background:var(--color-accent-soft);padding:2px 9px;border-radius:10px}
+  .addr-card h4{font-size:14px;font-weight:700;color:var(--color-primary)}
+  .addr-card p{font-size:13px;color:var(--color-secondary);margin-top:6px;line-height:1.6}
+  .addr-card .acts{display:flex;gap:14px;margin-top:12px;font-size:12.5px;color:var(--color-accent);cursor:pointer}
+  .addr-add{border:1.5px dashed var(--color-border);border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--color-muted);cursor:pointer;transition:.15s;min-height:120px}
+  .addr-add:hover{border-color:var(--color-accent);color:var(--color-accent);background:var(--color-accent-soft)}
+  .hist-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+
+  /* ============ MERCHANT APPLY ============ */
+  .merch-hero{position:relative;color:#fff;padding:64px 0;overflow:hidden}
+  .merch-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+  .merch-hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,23,42,.86),rgba(15,23,42,.5));z-index:1}
+  .merch-hero .wrap{position:relative;z-index:2}
+  .merch-hero h1{font-size:36px;font-weight:800;letter-spacing:-.5px;max-width:640px}
+  .merch-hero p{color:#cbd5e1;margin-top:12px;max-width:560px;font-size:15px;line-height:1.7}
+  .merch-hero .btn{margin-top:24px}
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:34px 0}
+  .step{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);padding:20px 18px;position:relative}
+  .step .num{width:36px;height:36px;border-radius:50%;background:var(--color-accent-soft);color:var(--color-accent);display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:12px}
+  .step.done .num{background:var(--color-accent);color:#fff}
+  .step h4{font-size:14.5px;font-weight:700;color:var(--color-primary)}
+  .step p{font-size:12.5px;color:var(--color-muted);margin-top:6px;line-height:1.6}
+  .merch-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .merch-ben{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);padding:22px}
+  .merch-ben .ic{width:42px;height:42px;border-radius:11px;background:var(--color-accent-soft);color:var(--color-accent);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+  .merch-ben h4{font-size:15.5px;font-weight:700;color:var(--color-primary)}
+  .merch-ben p{font-size:13px;color:var(--color-muted);margin-top:6px;line-height:1.6}
+  .merch-form{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius);padding:28px;margin-top:8px}
+  .merch-form .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .merch-form h4.fsec{font-size:15px;font-weight:700;color:var(--color-primary);margin:8px 0 16px;display:flex;align-items:center;gap:8px;padding-top:18px;border-top:1px solid var(--color-border)}
+  .merch-form h4.fsec:first-of-type{border-top:none;padding-top:0}
+
+  /* ============ EMAIL VERIFY ============ */
+  .verify-wrap{max-width:560px;margin:0 auto;padding:90px 24px}
+  .verify-card{background:#fff;border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:40px 36px;text-align:center;box-shadow:var(--shadow)}
+  .verify-card img.illu{width:150px;height:150px;object-fit:contain;margin:0 auto 18px}
+  .verify-card h2{font-size:24px;color:var(--color-primary);font-weight:800}
+  .verify-card p{color:var(--color-muted);margin-top:12px;font-size:14px;line-height:1.75}
+  .verify-card .em{color:var(--color-accent);font-weight:600}
+  .verify-code{display:flex;gap:10px;justify-content:center;margin:24px 0}
+  .verify-code input{width:50px;height:58px;text-align:center;font-size:22px;font-weight:700;border:1px solid var(--color-border);border-radius:10px;outline:none;transition:.15s}
+  .verify-code input:focus{border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-soft)}
+  .verify-done{display:flex;flex-direction:column;align-items:center}
+
+  /* ============ LEGAL DOC ============ */
+  .legal{max-width:820px;margin:0 auto;padding:44px 24px 70px}
+  .legal h1{font-size:30px;font-weight:800;color:var(--color-primary);letter-spacing:-.5px}
+  .legal .updated{font-size:13px;color:var(--color-muted);margin-top:8px}
+  .legal .toc{background:var(--color-bg);border:1px solid var(--color-border);border-radius:12px;padding:18px 22px;margin:24px 0}
+  .legal .toc a{display:block;padding:5px 0;color:var(--color-accent);font-size:14px;cursor:pointer;transition:.12s}
+  .legal .toc a:hover{text-decoration:underline}
+  .legal h2{font-size:19px;font-weight:800;color:var(--color-primary);margin:30px 0 10px}
+  .legal h3{font-size:15.5px;font-weight:700;color:var(--color-foreground);margin:18px 0 6px}
+  .legal p{font-size:14.5px;color:var(--color-secondary);line-height:1.8;margin-bottom:10px}
+  .legal ul{margin:0 0 12px 20px;font-size:14.5px;color:var(--color-secondary);line-height:1.8}
+  .legal li{margin-bottom:6px}
+  .legal .lead{font-size:15px;color:var(--color-text)}
+
+  /* form controls (shared) */
+  .lbl{display:block;font-size:12.5px;font-weight:600;color:var(--color-secondary);margin-bottom:6px}
+  .inp{width:100%;border:1px solid var(--color-border);border-radius:10px;padding:11px 13px;font-size:14px;outline:none;background:#fff;transition:.15s;font-family:inherit;color:var(--color-foreground)}
+  .inp:focus{border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-soft)}
+  textarea.inp{resize:vertical}
+  select.inp{cursor:pointer}
+  .pcard.mini .pthumb{height:120px}
+  .btn-block{width:100%}
+
+  @media(max-width:1100px){
+    .cat-grid,.pgrid,.sgrid,.spec,.rel-grid{grid-template-columns:repeat(2,1fr)}
+    .pd-top,.sd-body,.auth,.pl-layout{grid-template-columns:1fr}
+    .pd-gallery{position:static}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .acct-layout{grid-template-columns:1fr}
+    .acct-side{position:static}
+    .steps{grid-template-columns:repeat(2,1fr)}
+    .merch-benefits{grid-template-columns:1fr}
+    .form-grid,.addr-grid,.hist-grid{grid-template-columns:repeat(2,1fr)}
+    .merch-form .row2{grid-template-columns:1fr}
+    .trade-grid{grid-template-columns:repeat(2,1fr)}
+    .supplier-stats{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:640px){
+    .hist-grid{grid-template-columns:1fr}
+    .addr-grid{grid-template-columns:1fr}
+    .form-grid{grid-template-columns:1fr}
+    .pd-tiers,.trade-grid{grid-template-columns:1fr}
+    .pd-meta,.supplier-stats{grid-template-columns:1fr}
+    .pd-actions{flex-wrap:wrap}
+    .pd-actions .btn{flex:1 1 120px}
+    .pd-tab-nav{overflow-x:auto;gap:4px}
+    .pd-tab-nav button{white-space:nowrap;padding:10px 12px}
+    .supplier-prof{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<!-- SVG SPRITE (Phosphor-style outline icons) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 001 1h12a1 1 0 001-1V9.5"/><path d="M9 21v-6h6v6"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M3 9l1.2-3.6a1 1 0 011-.4h14.6a1 1 0 011 .4L21 9"/><path d="M4 9v11h16V9"/><path d="M9 20v-6h6v6"/><path d="M3 9a2 2 0 014 0 2 2 0 014 0 2 2 0 014 0 2 2 0 014 0"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.4 8.4 0 013.8-.9h.5a8.5 8.5 0 018 8v.5z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 010 18 14 14 0 010-18z"/></symbol>
+    <symbol id="i-currency" viewBox="0 0 24 24"><path d="M12 1v22"/><path d="M16 5.6C16 3.7 14.3 3 12 3S8 3.9 8 5.8c0 3 4 3.6 4 5.8M8 18.4C8 20.3 9.7 21 12 21s4-.9 4-2.8c0-3-4-3.6-4-5.8"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+    <symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 24 24"><path d="M19 12H6"/><path d="M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8L6.6 19.6l1-6L3.3 9.4l6-.9z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9A5 5 0 0112 5a5 5 0 019.5 7c-2.5 4.5-9.5 9-9.5 9z"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 11V4a1 1 0 011-1h7l9 9-8 8-9-9z"/><circle cx="7.5" cy="7.5" r="1.4"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-12a7 7 0 10-14 0c0 6 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h3l2 5-2 1a11 11 0 005 5l1-2 5 2v3a1 1 0 01-1 1A16 16 0 014 5a1 1 0 011-1z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M15 4h3a1 1 0 011 1v14a1 1 0 01-1 1h-3"/><path d="M10 12H3M6 8l-4 4 4 4"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 24 24"><path d="M7 4v16M7 4L3 8M7 4l4 4M17 20V4M17 20l4-4M17 20l-4-4"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 014 13c0-5 4-9 16-9 0 8-4 13-9 13z"/><path d="M4 20c4-6 8-8 13-9"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 9h13v5a5 5 0 01-5 5H9a5 5 0 01-5-5z"/><path d="M17 10h2a2 2 0 010 4h-2"/><path d="M7 5c0-1 1-1 1-2M11 5c0-1 1-1 1-2"/></symbol>
+    <symbol id="i-gem" viewBox="0 0 24 24"><path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3l3 6 3-6"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2 6h11v10H2zM13 9h4l3 3v4h-7"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-translate" viewBox="0 0 24 24"><path d="M4 6h9M8 4v2c0 4-2 7-6 8M5 10c0 4 3 7 7 8"/><path d="M13 20l4-9 4 9M14.5 17h5"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.5l6.8-3M8.6 13.5l6.8 3"/></symbol>
+  </defs>
+</svg>
+
+<div class="viewport" id="viewport">
+
+    <!-- ======================= TOP PROMO + NAV ======================= -->
+    <div class="promo">🌏 <b data-i18n="promo_b">Hainan Specialty Industry Export Platform</b><span data-i18n="promo_rest"> · Connecting global buyers with certified Hainan manufacturers</span></div>
+    <nav class="top">
+      <div class="nav-inner">
+        <div class="brand" data-route="home" style="cursor:pointer">
+          <span class="logo"><svg class="icon"><use href="#i-leaf"/></svg></span>
+          <span>HainanExport<small>GLOBAL SOURCING</small></span>
+        </div>
+        <div class="nav-links">
+          <a data-route="home" class="active" data-i18n="nav_home">Home</a>
+          <a data-route="products" data-i18n="nav_products">Products</a>
+          <a data-route="suppliers" data-i18n="nav_suppliers">Suppliers</a>
+          <a data-route="inquiries" id="nav-inquiry" data-i18n="nav_inquiries">Inquiries</a>
+        </div>
+        <div class="nav-right">
+          <!-- language -->
+          <div class="dd">
+            <button class="pill" id="langBtn"><svg class="icon icon-sm"><use href="#i-globe"/></svg> <span id="langCode">EN</span> <svg class="icon icon-sm"><use href="#i-caret"/></svg></button>
+            <div class="dd-menu" id="langMenu"></div>
+          </div>
+          <!-- currency -->
+          <div class="dd">
+            <button class="pill" id="curBtn"><svg class="icon icon-sm"><use href="#i-currency"/></svg> <span class="code" id="curCode">USD</span> <svg class="icon icon-sm"><use href="#i-caret"/></svg></button>
+            <div class="dd-menu" id="curMenu"></div>
+          </div>
+          <!-- account -->
+          <div class="dd" id="accDd">
+            <div class="avatar" id="accAvatar" style="display:none">G</div>
+            <button class="btn btn-primary" id="loginBtn" data-route="login" data-i18n="sign_in">Sign In</button>
+            <div class="dd-menu" id="accMenu" style="min-width:210px">
+              <a class="dd-item" data-route="account"><svg class="icon icon-sm"><use href="#i-user"/></svg> <span data-i18n="my_account">My Account</span></a>
+              <a class="dd-item" data-route="inquiries"><svg class="icon icon-sm"><use href="#i-chat"/></svg> <span data-i18n="my_inquiries">My Inquiries</span></a>
+              <a class="dd-item" data-route="account"><svg class="icon icon-sm"><use href="#i-pin"/></svg> <span data-i18n="address_book">Address Book</span></a>
+              <div style="height:1px;background:var(--color-border);margin:5px 0"></div>
+              <a class="dd-item" id="logoutItem"><svg class="icon icon-sm"><use href="#i-logout"/></svg> <span data-i18n="sign_out">Sign Out</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ======================= HOME ======================= -->
+    <section class="view active" id="view-home">
+      <div class="hero">
+        <div class="hero-slides">
+          <div class="hero-slide active" style="background-image:url('assets/hero1.jpg')"></div>
+          <div class="hero-slide" style="background-image:url('assets/hero2.jpg')"></div>
+          <div class="hero-slide" style="background-image:url('assets/hero3.jpg')"></div>
+        </div>
+        <div class="hero-dots">
+          <span class="active" data-idx="0"></span>
+          <span data-idx="1"></span>
+          <span data-idx="2"></span>
+        </div>
+        <div class="wrap">
+          <h1><span data-i18n="hero_h1_pre">Source premium products from </span><span class="hl" data-i18n="hero_h1_hl">Hainan, China</span><span data-i18n="hero_h1_post"> — tropical agriculture, food &amp; crafts.</span></h1>
+          <p class="sub" data-i18n="hero_sub">A trusted B2B export platform connecting global buyers with certified Hainan specialty manufacturers. Verified suppliers, transparent pricing, multilingual support.</p>
+          <div class="search-box">
+            <button class="cat-select" id="heroCat"><span data-i18n="all_categories">All Categories</span> <svg class="icon icon-sm"><use href="#i-caret"/></svg></button>
+            <input id="heroSearch" data-i18n-ph="search_ph" placeholder="Search products, suppliers, HS codes…" />
+            <button class="btn btn-primary" id="heroSearchBtn"><svg class="icon icon-sm"><use href="#i-search"/></svg> <span data-i18n="search">Search</span></button>
+          </div>
+          <div class="chips">
+            <span data-i18n="popular">Popular:</span>
+            <a data-search="coconut" data-i18n="coconut">Coconut</a>
+            <a data-search="coffee" data-i18n="coffee">Coffee</a>
+            <a data-search="mango" data-i18n="mango">Mango</a>
+            <a data-search="pepper" data-i18n="black_pepper">Black Pepper</a>
+            <a data-search="brocade" data-i18n="li_brocade">Li Brocade</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="stats">
+          <div class="stat"><div class="num" data-count="128">128</div><div class="lbl"><svg class="icon icon-sm"><use href="#i-store"/></svg> <span data-i18n="verified_suppliers">Verified Suppliers</span></div></div>
+          <div class="stat"><div class="num" data-count="2460">2,460</div><div class="lbl"><svg class="icon icon-sm"><use href="#i-grid"/></svg> <span data-i18n="listed_products">Listed Products</span></div></div>
+          <div class="stat"><div class="num" data-count="63">63</div><div class="lbl"><svg class="icon icon-sm"><use href="#i-globe"/></svg> <span data-i18n="buyer_countries">Buyer Countries</span></div></div>
+          <div class="stat"><div class="num" data-count="5810">5,810</div><div class="lbl"><svg class="icon icon-sm"><use href="#i-chat"/></svg> <span data-i18n="inquiries_handled">Inquiries Handled</span></div></div>
+        </div>
+      </div>
+
+      <section class="block">
+        <div class="wrap">
+          <div class="sec-head">
+            <div><h2 data-i18n="browse_category">Browse by Category</h2><p data-i18n="browse_category_sub">Explore Hainan's signature specialty industries</p></div>
+          </div>
+          <div class="cat-grid" id="catGrid"></div>
+        </div>
+      </section>
+
+      <section class="block" style="background:#fff;border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border)">
+        <div class="wrap">
+          <div class="sec-head">
+            <div><h2 data-i18n="hot_products">Hot Products</h2><p data-i18n="hot_products_sub">Recommended by the platform operations team</p></div>
+            <a class="link-more" data-route="products"><span data-i18n="view_all">View all</span> <svg class="icon icon-sm"><use href="#i-arrow-r"/></svg></a>
+          </div>
+          <div class="pgrid" id="hotGrid"></div>
+        </div>
+      </section>
+
+      <section class="block">
+        <div class="wrap">
+          <div class="sec-head">
+            <div><h2 data-i18n="featured_suppliers">Featured Suppliers</h2><p data-i18n="featured_suppliers_sub">Top-rated Hainan exporters</p></div>
+            <a class="link-more" data-route="suppliers"><span data-i18n="view_all">View all</span> <svg class="icon icon-sm"><use href="#i-arrow-r"/></svg></a>
+          </div>
+          <div class="sgrid" id="featSuppliers"></div>
+        </div>
+      </section>
+
+      <section class="block">
+        <div class="wrap">
+          <div class="sec-head"><div><h2 data-i18n="specialty_industries">Specialty Industries</h2><p data-i18n="specialty_sub">What makes Hainan unique</p></div></div>
+          <div class="spec">
+            <div class="spec-card" style="background:linear-gradient(135deg,#059669,#0d9488)">
+              <h3 data-i18n="spec_agri_t">Tropical Agriculture</h3>
+              <p data-i18n="spec_agri_d">Fresh mango, coconut, pineapple, dragon fruit from Hainan's tropical climate.</p>
+              <button class="btn" data-cat="agri"><span data-i18n="explore">Explore</span> <svg class="icon icon-sm"><use href="#i-arrow-r"/></svg></button>
+            </div>
+            <div class="spec-card" style="background:linear-gradient(135deg,#d97706,#ea580c)">
+              <h3 data-i18n="spec_food_t">Deep-processed Food</h3>
+              <p data-i18n="spec_food_d">Coconut candy, coffee beans, pepper &amp; canned specialties with export certification.</p>
+              <button class="btn" data-cat="food"><span data-i18n="explore">Explore</span> <svg class="icon icon-sm"><use href="#i-arrow-r"/></svg></button>
+            </div>
+            <div class="spec-card" style="background:linear-gradient(135deg,#be185d,#9333ea)">
+              <h3 data-i18n="spec_craft_t">Handicrafts</h3>
+              <p data-i18n="spec_craft_d">Li ethnic brocade, coconut-shell carving &amp; shell art — intangible cultural heritage.</p>
+              <button class="btn" data-cat="craft"><span data-i18n="explore">Explore</span> <svg class="icon icon-sm"><use href="#i-arrow-r"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <div class="wrap">
+          <div class="cta">
+            <div>
+              <h2 data-i18n="cta_title">Are you a Hainan manufacturer?</h2>
+              <p data-i18n="cta_desc">Join the platform for free and reach global buyers. Verified onboarding in ~5 working days.</p>
+            </div>
+            <button class="btn btn-dark" data-route="merchant"><svg class="icon icon-sm"><use href="#i-store"/></svg> <span data-i18n="become_seller">Become a Seller</span></button>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ======================= PRODUCTS ======================= -->
+    <section class="view" id="view-products">
+      <div class="pl-header">
+        <div class="wrap">
+          <h1 data-i18n="pl_title">Products</h1>
+          <p data-i18n="pl_sub">Browse certified export products from Hainan suppliers</p>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="pl-layout">
+          <aside class="filters">
+            <div class="fgroup">
+              <h4><svg class="icon icon-sm"><use href="#i-grid"/></svg> <span data-i18n="f_categories">Categories</span></h4>
+              <ul class="ftree" id="catTree"></ul>
+            </div>
+            <div class="fgroup">
+              <h4><svg class="icon icon-sm"><use href="#i-currency"/></svg> <span data-i18n="f_price">Price Range (USD)</span></h4>
+              <div class="range-row">
+                <input type="number" id="priceMin" data-i18n-ph="min_ph" placeholder="Min" />
+                <span style="color:var(--color-muted)">–</span>
+                <input type="number" id="priceMax" data-i18n-ph="max_ph" placeholder="Max" />
+              </div>
+            </div>
+            <div class="fgroup">
+              <h4><svg class="icon icon-sm"><use href="#i-store"/></svg> <span data-i18n="f_supplier">Supplier</span></h4>
+              <label class="check"><input type="checkbox" class="sup-filter" value="Hainan Tropical Agriculture Group"/> Hainan Tropical Agriculture</label>
+              <label class="check"><input type="checkbox" class="sup-filter" value="Coconut Island Foods"/> Coconut Island Foods</label>
+              <label class="check"><input type="checkbox" class="sup-filter" value="Xinglong Coffee Co."/> Xinglong Coffee</label>
+              <label class="check"><input type="checkbox" class="sup-filter" value="Li Brocade Workshop"/> Li Brocade Workshop</label>
+            </div>
+          </aside>
+          <div class="pl-main">
+            <div class="toolbar">
+              <div class="count"><b id="prodCount">0</b> <span data-i18n="products_found">products found</span></div>
+              <button class="sort" id="sortBtn"><svg class="icon icon-sm"><use href="#i-sort"/></svg> <span id="sortLabel" data-i18n="sort_default">Default</span> <svg class="icon icon-sm"><use href="#i-caret"/></svg></button>
+              <div class="dd">
+                <button class="deliv" id="delivBtn"><svg class="icon icon-sm"><use href="#i-truck"/></svg> <span id="delivLabel">Ship to: Global</span> <svg class="icon icon-sm"><use href="#i-caret"/></svg></button>
+                <div class="dd-menu" id="delivMenu" style="min-width:240px"></div>
+              </div>
+            </div>
+            <div class="pgrid" id="prodGrid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= PRODUCT DETAIL ======================= -->
+    <section class="view" id="view-product-detail">
+      <div class="wrap">
+        <div style="padding:18px 0 0;font-size:13px;color:var(--color-muted);display:flex;align-items:center;gap:6px">
+          <a data-route="home" style="cursor:pointer" data-i18n="crumb_home">Home</a><svg class="icon icon-sm"><use href="#i-chevron"/></svg>
+          <a data-route="products" style="cursor:pointer" data-i18n="crumb_products">Products</a><svg class="icon icon-sm"><use href="#i-chevron"/></svg>
+          <span id="pdCrumb" style="color:var(--color-secondary)" data-i18n="crumb_detail">Detail</span>
+        </div>
+        <div class="pd" id="pdContent"></div>
+      </div>
+    </section>
+
+    <!-- ======================= SUPPLIERS ======================= -->
+    <section class="view" id="view-suppliers">
+      <div class="pl-header">
+        <div class="wrap">
+          <h1 data-i18n="sup_title">Suppliers</h1>
+          <p data-i18n="sup_sub">Verified Hainan manufacturers &amp; exporters</p>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="pl-layout" style="grid-template-columns:1fr">
+          <div class="pl-main" style="width:100%">
+            <div class="toolbar">
+              <div class="count"><b id="supCount">0</b> <span data-i18n="suppliers_found">suppliers found</span></div>
+              <div class="dd" style="margin-left:auto">
+                <button class="sort" id="supCatBtn"><svg class="icon icon-sm"><use href="#i-filter"/></svg> <span id="supCatLabel" data-i18n="all_categories">All Categories</span> <svg class="icon icon-sm"><use href="#i-caret"/></svg></button>
+                <div class="dd-menu" id="supCatMenu"></div>
+              </div>
+            </div>
+            <div class="sgrid" id="supGrid" style="grid-template-columns:repeat(3,1fr)"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= SUPPLIER DETAIL ======================= -->
+    <section class="view" id="view-supplier-detail">
+      <div class="sd-hero">
+        <div class="wrap" id="sdHero"></div>
+      </div>
+      <div class="wrap">
+        <div class="sd-body" id="sdBody"></div>
+      </div>
+    </section>
+
+    <!-- ======================= INQUIRIES ======================= -->
+    <section class="view" id="view-inquiries">
+      <div class="pl-header">
+        <div class="wrap">
+          <h1 data-i18n="inq_title">My Inquiries</h1>
+          <p data-i18n="inq_sub">Track and manage your sourcing requests with suppliers</p>
+        </div>
+      </div>
+      <div class="wrap">
+        <div id="inqList"></div>
+      </div>
+    </section>
+
+    <!-- ======================= INQUIRY DETAIL ======================= -->
+    <section class="view" id="view-inq-detail">
+      <div class="wrap">
+        <div id="inqDetail"></div>
+      </div>
+    </section>
+
+    <!-- ======================= ACCOUNT ======================= -->
+    <section class="view" id="view-account">
+      <div class="wrap">
+        <div class="acct-layout" id="acctLayout"></div>
+      </div>
+    </section>
+
+    <!-- ======================= MERCHANT APPLY ======================= -->
+    <section class="view" id="view-merchant">
+      <div class="merch-hero">
+        <div class="merch-hero-bg" style="background-image:url('assets/onboard_hero.png')"></div>
+        <div class="merch-hero-overlay"></div>
+        <div class="wrap">
+          <h1 data-i18n="merch_title">Become a Seller</h1>
+          <p data-i18n="merch_sub">Join Hainan's official export platform and reach global buyers.</p>
+          <button class="btn btn-dark" id="merchStart"><svg class="icon icon-sm"><use href="#i-arrow-r"/></svg> <span data-i18n="merch_start">Start Application</span></button>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="steps" id="merchSteps"></div>
+        <section class="block">
+          <div class="sec-head"><div><h2 data-i18n="merch_ben_t">Why join us</h2></div></div>
+          <div class="merch-benefits" id="merchBenefits"></div>
+        </section>
+        <section class="block">
+          <div class="sec-head"><div><h2 data-i18n="merch_form_t">Seller Application</h2></div></div>
+          <div class="merch-form" id="merchForm"></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ======================= EMAIL VERIFY ======================= -->
+    <section class="view" id="view-verify">
+      <div class="verify-wrap" id="verifyWrap"></div>
+    </section>
+
+    <!-- ======================= PRIVACY POLICY ======================= -->
+    <section class="view" id="view-privacy">
+      <div class="legal" id="privacyDoc"></div>
+    </section>
+
+    <!-- ======================= TERMS OF SERVICE ======================= -->
+    <section class="view" id="view-terms">
+      <div class="legal" id="termsDoc"></div>
+    </section>
+
+    <!-- ======================= LOGIN / REGISTER ======================= -->
+    <section class="view" id="view-login">
+      <div class="auth">
+        <div class="auth-left">
+          <h2 data-i18n="auth_title">Global sourcing, made trusted.</h2>
+          <p data-i18n="auth_sub">Join thousands of international buyers sourcing directly from Hainan's verified specialty manufacturers.</p>
+          <div class="auth-points">
+            <div><span class="ic"><svg class="icon"><use href="#i-shield"/></svg></span> <span data-i18n="auth_p1">Verified suppliers &amp; export licenses</span></div>
+            <div><span class="ic"><svg class="icon"><use href="#i-globe"/></svg></span> <span data-i18n="auth_p2">11 languages · 8 currencies supported</span></div>
+            <div><span class="ic"><svg class="icon"><use href="#i-chat"/></svg></span> <span data-i18n="auth_p3">Direct inquiry to suppliers, fast response</span></div>
+            <div><span class="ic"><svg class="icon"><use href="#i-mail"/></svg></span> <span data-i18n="auth_p4">Email &amp; SMS notifications on every inquiry</span></div>
+          </div>
+        </div>
+        <div class="auth-right">
+          <div class="tabs">
+            <button id="tabSignin" class="active" data-i18n="tab_signin">Sign In</button>
+            <button id="tabSignup" data-i18n="tab_signup">Create Account</button>
+          </div>
+          <!-- sign in -->
+          <div id="formSignin">
+            <div class="field"><label data-i18n="email">Email</label><input type="email" placeholder="you@company.com" /></div>
+            <div class="field"><label data-i18n="password">Password</label><input type="password" placeholder="••••••••" /></div>
+            <div class="human" id="human1"><span class="box"><svg class="icon icon-sm" style="display:none"><use href="#i-check"/></svg></span><span data-i18n="not_robot">I'm not a robot</span></div>
+            <button class="btn btn-primary btn-block" id="signinBtn" data-i18n="signin_btn">Sign In</button>
+            <p class="auth-note"><span data-i18n="agree_pre">By continuing you agree to our </span><a data-route="privacy" data-i18n="privacy_policy">Privacy Policy</a><span data-i18n="agree_mid"> and </span><a data-route="terms" data-i18n="terms_service">Terms of Service</a><span data-i18n="agree_post">.</span></p>
+          </div>
+          <!-- sign up -->
+          <div id="formSignup" style="display:none">
+            <div class="field"><label data-i18n="full_name">Full Name</label><input placeholder="John Smith" /></div>
+            <div class="field"><label data-i18n="company">Company</label><input placeholder="ABC Trading Ltd." /></div>
+            <div class="field"><label data-i18n="email">Email</label><input type="email" placeholder="you@company.com" /></div>
+            <div class="field"><label data-i18n="country">Country</label><input placeholder="United States" /></div>
+            <div class="field"><label data-i18n="password">Password</label><input type="password" placeholder="••••••••" /></div>
+            <div class="human" id="human2"><span class="box"><svg class="icon icon-sm" style="display:none"><use href="#i-check"/></svg></span><span data-i18n="not_robot">I'm not a robot</span></div>
+            <button class="btn btn-primary btn-block" id="signupBtn" data-i18n="create_account">Create Account</button>
+            <p class="auth-note"><span data-i18n="verify_note">We'll send a verification email.</span> <a data-route="verify" data-i18n="resend_verify">Resend verification</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= FOOTER ======================= -->
+    <footer class="site">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <div class="brand"><span class="logo"><svg class="icon"><use href="#i-leaf"/></svg></span><span>HainanExport<small>GLOBAL SOURCING</small></span></div>
+          <p data-i18n="foot_brand">Hainan Specialty Industry Export Service Platform — connecting global buyers with certified Hainan manufacturers across tropical agriculture, deep-processed food and handicrafts.</p>
+        </div>
+        <div class="foot-col">
+          <h5 data-i18n="foot_platform">Platform</h5>
+          <a data-route="products" data-i18n="foot_products">Products</a>
+          <a data-route="suppliers" data-i18n="foot_suppliers">Suppliers</a>
+          <a data-route="inquiries" data-i18n="foot_inquiries">Inquiries</a>
+          <a data-route="merchant" data-i18n="foot_become_seller">Become a Seller</a>
+        </div>
+        <div class="foot-col">
+          <h5 data-i18n="foot_support">Support</h5>
+          <a data-route="account" data-i18n="help_center">Help Center</a>
+          <a data-route="account" data-i18n="contact_us">Contact Us</a>
+          <a data-route="verify" data-i18n="email_verification">Email Verification</a>
+        </div>
+        <div class="foot-col">
+          <h5 data-i18n="foot_legal">Legal</h5>
+          <a data-route="privacy" data-i18n="foot_privacy">Privacy Policy</a>
+          <a data-route="terms" data-i18n="foot_terms">Terms of Service</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span data-i18n="copyright">© 2026 Hainan Specialty Industry Export Platform. All rights reserved.</span>
+        <span data-i18n="compliant">Compliant with GDPR · CCPA</span>
+      </div>
+    </footer>
+
+  </div><!-- /viewport -->
+
+<div class="toast" id="toast"><svg class="icon"><use href="#i-check"/></svg> <span id="toastMsg"></span></div>
+
+<script>
+/* ===================== I18N DICTIONARY ===================== */
+const I18N={
+  EN:{
+    promo_b:"Hainan Specialty Industry Export Platform",promo_rest:" · Connecting global buyers with certified Hainan manufacturers",
+    nav_home:"Home",nav_products:"Products",nav_suppliers:"Suppliers",nav_inquiries:"Inquiries",
+    sign_in:"Sign In",my_account:"My Account",my_inquiries:"My Inquiries",address_book:"Address Book",sign_out:"Sign Out",
+    hero_h1_pre:"Source premium products from ",hero_h1_hl:"Hainan, China",hero_h1_post:" — tropical agriculture, food & crafts.",
+    hero_sub:"A trusted B2B export platform connecting global buyers with certified Hainan specialty manufacturers. Verified suppliers, transparent pricing, multilingual support.",
+    all_categories:"All Categories",search_ph:"Search products, suppliers, HS codes…",search:"Search",
+    popular:"Popular:",coconut:"Coconut",coffee:"Coffee",mango:"Mango",black_pepper:"Black Pepper",li_brocade:"Li Brocade",
+    verified_suppliers:"Verified Suppliers",listed_products:"Listed Products",buyer_countries:"Buyer Countries",inquiries_handled:"Inquiries Handled",
+    browse_category:"Browse by Category",browse_category_sub:"Explore Hainan's signature specialty industries",
+    hot_products:"Hot Products",hot_products_sub:"Recommended by the platform operations team",
+    featured_suppliers:"Featured Suppliers",featured_suppliers_sub:"Top-rated Hainan exporters",
+    specialty_industries:"Specialty Industries",specialty_sub:"What makes Hainan unique",view_all:"View all",explore:"Explore",browse_products:"browse products",
+    spec_agri_t:"Tropical Agriculture",spec_agri_d:"Fresh mango, coconut, pineapple, dragon fruit from Hainan's tropical climate.",
+    spec_food_t:"Deep-processed Food",spec_food_d:"Coconut candy, coffee beans, pepper & canned specialties with export certification.",
+    spec_craft_t:"Handicrafts",spec_craft_d:"Li ethnic brocade, coconut-shell carving & shell art — intangible cultural heritage.",
+    cta_title:"Are you a Hainan manufacturer?",cta_desc:"Join the platform for free and reach global buyers. Verified onboarding in ~5 working days.",become_seller:"Become a Seller",
+    pl_title:"Products",pl_sub:"Browse certified export products from Hainan suppliers",
+    f_categories:"Categories",f_price:"Price Range (USD)",f_supplier:"Supplier",min_ph:"Min",max_ph:"Max",
+    products_found:"products found",
+    sort_default:"Default",sort_new:"Newest",sort_price_asc:"Price ↑",sort_price_desc:"Price ↓",sort_views:"Most Viewed",
+    ship_to:"Ship to:",global:"Global",no_products:"No products match your filters.",
+    crumb_home:"Home",crumb_products:"Products",crumb_detail:"Detail",
+    views:"views",moq:"MOQ",
+    moq_label:"Min Order",hs_code:"HS Code",views_label:"Views",tag_label:"Tag",
+    send_inquiry:"Send Inquiry",save:"Save",
+    prod_desc:"Product Description",
+    specifications:"Specifications",
+    spec_product_name:"Product Name",spec_category:"Category",spec_unit_price:"Unit Price",
+    related:"Related Products",
+    pd_ref_price:"Reference Price",pd_zoom_hint:"Hover to zoom",
+    pd_contact_supplier:"Contact Supplier",pd_share:"Share",pd_view_store:"View Store",
+    pd_tab_desc:"Product Details",pd_tab_specs:"Specifications",pd_tab_trade:"Trade & Logistics",pd_tab_supplier:"Supplier",
+    pd_trade_lead_time:"Lead Time",pd_trade_port:"Port",pd_trade_payment:"Payment Terms",pd_trade_supply:"Supply Ability",
+    pd_trade_packaging:"Packaging",pd_trade_shelf_life:"Shelf Life",pd_trade_certifications:"Certifications",
+    pd_sup_more:"More from this supplier",share_copied:"Link copied to clipboard",
+    sup_title:"Suppliers",sup_sub:"Verified Hainan manufacturers & exporters",suppliers_found:"suppliers found",
+    card_products:"Products",card_exp:"Export exp.",card_origin:"Origin",
+    sd_verified:"Verified",yrs_export:"yrs export",
+    company_profile:"Company Profile",honors:"Honors & Certificates",products_label:"Products",
+    contact_inquiry:"Contact & Inquiry",contact_locked:"Contact details are visible after sign in, to protect suppliers from spam.",sign_in_to_view:"Sign In to View",
+    highlights:"Highlights",factory_photos:"Factory & Products",company_album:"Company Album",hl_products:"Products",hl_export_yrs:"Export Yrs",hl_origin:"Origin",hl_verified:"Verified",yes:"Yes",no:"No",
+    send_company_inquiry:"Send Company Inquiry",
+    auth_title:"Global sourcing, made trusted.",auth_sub:"Join thousands of international buyers sourcing directly from Hainan's verified specialty manufacturers.",
+    auth_p1:"Verified suppliers & export licenses",auth_p2:"11 languages · 8 currencies supported",auth_p3:"Direct inquiry to suppliers, fast response",auth_p4:"Email & SMS notifications on every inquiry",
+    tab_signin:"Sign In",tab_signup:"Create Account",email:"Email",password:"Password",not_robot:"I'm not a robot",
+    agree_pre:"By continuing you agree to our ",privacy_policy:"Privacy Policy",agree_mid:" and ",terms_service:"Terms of Service",agree_post:".",
+    full_name:"Full Name",company:"Company",country:"Country",create_account:"Create Account",
+    verify_note:"We'll send a verification email.",resend_verify:"Resend verification",
+    foot_brand:"Hainan Specialty Industry Export Service Platform — connecting global buyers with certified Hainan manufacturers across tropical agriculture, deep-processed food and handicrafts.",
+    foot_platform:"Platform",foot_support:"Support",foot_legal:"Legal",
+    foot_products:"Products",foot_suppliers:"Suppliers",foot_inquiries:"Inquiries",foot_become_seller:"Become a Seller",
+    help_center:"Help Center",contact_us:"Contact Us",email_verification:"Email Verification",
+    foot_privacy:"Privacy Policy",foot_terms:"Terms of Service",
+    copyright:"© 2026 Hainan Specialty Industry Export Platform. All rights reserved.",compliant:"Compliant with GDPR · CCPA",
+    back_home:"Back to Home",
+    /* ===== batch2 ===== */
+    inq_title:"My Inquiries",inq_sub:"Track and manage your sourcing requests with suppliers",
+    inq_filter_all:"All",inq_filter_pending:"Pending",inq_filter_responded:"Responded",inq_filter_follow:"Following-up",inq_filter_converted:"Converted",inq_filter_closed:"Closed",
+    st_pending:"Pending",st_responded:"Responded",st_follow:"Following-up",st_converted:"Converted",st_closed:"Closed",
+    inq_type_product:"Product Inquiry",inq_type_company:"Company Inquiry",inq_about:"About",inq_reply:"Reply",inq_send:"Send",inq_you:"You",inq_supplier:"Supplier",
+    inq_empty_t:"No inquiries yet",inq_empty_d:"When you contact a supplier, your conversations will appear here.",
+    inq_locked_t:"Sign in to view inquiries",inq_locked_d:"Log in to track your sourcing requests and supplier replies.",inq_search_ph:"Search inquiries by subject or product",inq_results:"results",inq_col_subj:"Subject",inq_col_ref:"Product / Supplier",inq_col_type:"Type",inq_col_status:"Status",inq_col_date:"Date",inq_col_ops:"Actions",inq_view:"View",inq_back:"Back to list",inq_ov_ref:"Reference",inq_ov_qty:"Quantity",inq_ov_date:"Created",inq_ov_supplier:"Supplier",inq_change_status:"Change status",inq_msgs_t:"Follow-up messages",inq_leave_msg:"Leave a message",inq_msg_ph:"Type your follow-up message to the supplier…",inq_msg_hint:"Messages are sent to the supplier for inquiry follow-up. This is not a live chat.",inq_status_updated:"Status updated",inq_created:"Created",
+    acct_title:"My Account",acct_profile:"Profile",acct_address:"Address Book",acct_history:"Browsing History",
+    acct_profile_desc:"Manage your personal and company information",acct_addr_desc:"Saved shipping and billing addresses",acct_hist_desc:"Products you recently viewed",
+    acct_fullname:"Full Name",acct_company:"Company",acct_country:"Country / Region",acct_email:"Email",acct_phone:"Phone",acct_save:"Save Changes",acct_saved:"Profile saved",
+    acct_addr_default:"Default",acct_addr_ship:"Shipping",acct_addr_bill:"Billing",acct_edit:"Edit",acct_delete:"Delete",acct_add_addr:"Add Address",
+    acct_locked_t:"Sign in to view your account",acct_locked_d:"Log in to manage your profile, addresses and browsing history.",acct_view_products:"Browse Products",
+    merch_title:"Become a Seller",merch_sub:"Join Hainan's official export platform and reach global buyers.",merch_start:"Start Application",
+    merch_step1_t:"Submit Information",merch_step1_d:"Fill in company profile and upload certificates.",merch_step2_t:"Platform Review",merch_step2_d:"Our team verifies licenses within 3 working days.",merch_step3_t:"Sign Contract",merch_step3_d:"Agree to the seller agreement online.",merch_step4_t:"Onboarding & Training",merch_step4_d:"Get store setup and export guidance.",merch_step5_t:"Go Live",merch_step5_d:"Publish products and receive inquiries.",
+    merch_ben_t:"Why join us",merch_ben1_t:"Global Reach",merch_ben1_d:"Reach buyers from 60+ countries through one verified platform.",merch_ben2_t:"Verified Trust",merch_ben2_d:"Platform verification builds buyer confidence and reduces disputes.",merch_ben3_t:"Full Service",merch_ben3_d:"Listing, inquiry management and export support in one place.",
+    merch_form_t:"Seller Application",merch_fsec1:"Company Information",merch_fsec2:"Products & Certifications",merch_fsec3:"Contact Person",
+    merch_cname:"Company Name",merch_ccat:"Main Category",merch_cexp:"Years in Export",merch_cweb:"Company Website",merch_pdesc:"Product Description",merch_cert:"Certifications (comma separated)",
+    merch_contact_name:"Contact Name",merch_contact_title:"Job Title",merch_contact_email:"Email",merch_contact_phone:"Phone",merch_submit:"Submit Application",merch_submitted:"Application submitted! We'll review within 3 working days.",
+    verify_t:"Verify your email",verify_d:"We've sent a verification link to",verify_d2:"Please check your inbox and click the link, or enter the 6-digit code below.",verify_resend:"Resend email",verify_submit:"Verify",verify_done_t:"Email verified!",verify_done_d:"Your account is now active. Welcome aboard.",verify_go:"Go to My Account",
+    privacy_t:"Privacy Policy",terms_t:"Terms of Service",privacy_updated:"Last updated: January 2026",terms_updated:"Last updated: January 2026"
+  },
+  ZH:{
+    promo_b:"海南特色产业出海平台",promo_rest:" · 连接全球买家与海南认证制造商",
+    nav_home:"首页",nav_products:"产品",nav_suppliers:"供应商",nav_inquiries:"询盘",
+    sign_in:"登录",my_account:"我的账户",my_inquiries:"我的询盘",address_book:"地址簿",sign_out:"退出登录",
+    hero_h1_pre:"采购来自",hero_h1_hl:"中国海南",hero_h1_post:" 的优质产品——热带农业、食品与手工艺。",
+    hero_sub:"值得信赖的 B2B 出海平台，连接全球买家与海南认证特色制造商。供应商经过认证、价格透明、多语言支持。",
+    all_categories:"全部分类",search_ph:"搜索产品、供应商、HS 编码…",search:"搜索",
+    popular:"热门：",coconut:"椰子",coffee:"咖啡",mango:"芒果",black_pepper:"黑胡椒",li_brocade:"黎锦",
+    verified_suppliers:"认证供应商",listed_products:"在售产品",buyer_countries:"买家覆盖国家",inquiries_handled:"已处理询盘",
+    browse_category:"按分类浏览",browse_category_sub:"探索海南特色优势产业",
+    hot_products:"热销产品",hot_products_sub:"平台运营团队推荐",
+    featured_suppliers:"精选供应商",featured_suppliers_sub:"海南高评分出口商",
+    specialty_industries:"特色产业",specialty_sub:"海南的独特之处",view_all:"查看全部",explore:"探索",browse_products:"浏览产品",
+    spec_agri_t:"热带农业",spec_agri_d:"产自海南热带气候的新鲜芒果、椰子、菠萝、火龙果。",
+    spec_food_t:"深加工食品",spec_food_d:"椰糖、咖啡豆、胡椒及罐头特产，均具出口认证。",
+    spec_craft_t:"特色手工艺",spec_craft_d:"黎族织锦、椰雕与贝壳工艺——非物质文化遗产。",
+    cta_title:"您是海南的制造商吗？",cta_desc:"免费入驻平台，触达全球买家。认证入驻约 5 个工作日。",become_seller:"成为卖家",
+    pl_title:"产品",pl_sub:"浏览海南供应商的认证出口产品",
+    f_categories:"分类",f_price:"价格区间（美元）",f_supplier:"供应商",min_ph:"最低",max_ph:"最高",
+    products_found:"个产品",
+    sort_default:"默认",sort_new:"最新",sort_price_asc:"价格 ↑",sort_price_desc:"价格 ↓",sort_views:"最多浏览",
+    ship_to:"配送至：",global:"全球",no_products:"没有符合筛选条件的产品。",
+    crumb_home:"首页",crumb_products:"产品",crumb_detail:"详情",
+    views:"浏览",moq:"起订量",
+    moq_label:"起订量",hs_code:"HS 编码",views_label:"浏览量",tag_label:"标签",
+    send_inquiry:"发送询盘",save:"收藏",
+    prod_desc:"产品描述",
+    specifications:"规格参数",
+    spec_product_name:"产品名称",spec_category:"分类",spec_unit_price:"单价",
+    related:"相关产品",
+    pd_ref_price:"参考价",pd_zoom_hint:"悬停放大",
+    pd_contact_supplier:"联系企业",pd_share:"分享",pd_view_store:"进入店铺",
+    pd_tab_desc:"产品详情",pd_tab_specs:"规格参数",pd_tab_trade:"贸易与物流",pd_tab_supplier:"供应商",
+    pd_trade_lead_time:"备货周期",pd_trade_port:"装运港",pd_trade_payment:"付款方式",pd_trade_supply:"供货能力",
+    pd_trade_packaging:"包装方式",pd_trade_shelf_life:"保质期",pd_trade_certifications:"认证资质",
+    pd_sup_more:"该供应商更多产品",share_copied:"链接已复制到剪贴板",
+    sup_title:"供应商",sup_sub:"海南认证制造商与出口商",suppliers_found:"个供应商",
+    card_products:"产品",card_exp:"出口经验",card_origin:"产地",
+    sd_verified:"已认证",yrs_export:"年出口经验",
+    company_profile:"企业简介",honors:"荣誉与资质",products_label:"产品",
+    contact_inquiry:"联系与询盘",contact_locked:"登录后可查看联系方式，以防止供应商信息被骚扰。",sign_in_to_view:"登录查看",
+    highlights:"亮点",factory_photos:"工厂与产品",company_album:"企业相册",hl_products:"产品",hl_export_yrs:"出口年限",hl_origin:"产地",hl_verified:"认证",yes:"是",no:"否",
+    send_company_inquiry:"发送企业询盘",
+    auth_title:"全球采购，值得信赖。",auth_sub:"加入数千名国际买家，直接从海南认证特色制造商采购。",
+    auth_p1:"认证供应商与出口资质",auth_p2:"支持 11 种语言 · 8 种货币",auth_p3:"直连供应商询盘，快速响应",auth_p4:"每笔询盘均有邮件与短信通知",
+    tab_signin:"登录",tab_signup:"注册",email:"邮箱",password:"密码",not_robot:"我不是机器人",
+    agree_pre:"继续即表示您同意我们的 ",privacy_policy:"隐私政策",agree_mid:" 与 ",terms_service:"服务条款",agree_post:"。",
+    full_name:"姓名",company:"公司",country:"国家",create_account:"创建账户",
+    verify_note:"我们将发送验证邮件。",resend_verify:"重发验证",
+    foot_brand:"海南特色产业出海服务平台——连接全球买家与海南认证制造商，覆盖热带农业、深加工食品与手工艺。",
+    foot_platform:"平台",foot_support:"支持",foot_legal:"法律",
+    foot_products:"产品",foot_suppliers:"供应商",foot_inquiries:"询盘",foot_become_seller:"成为卖家",
+    help_center:"帮助中心",contact_us:"联系我们",email_verification:"邮箱验证",
+    foot_privacy:"隐私政策",foot_terms:"服务条款",
+    copyright:"© 2026 海南特色产业出海平台 版权所有。",compliant:"符合 GDPR · CCPA 合规要求",
+    back_home:"返回首页",
+    /* ===== batch2 ===== */
+    inq_title:"我的询盘",inq_sub:"跟踪并管理您与供应商的采购沟通",
+    inq_filter_all:"全部",inq_filter_pending:"待处理",inq_filter_responded:"已回复",inq_filter_follow:"跟进中",inq_filter_converted:"已转化",inq_filter_closed:"已关闭",
+    st_pending:"待处理",st_responded:"已回复",st_follow:"跟进中",st_converted:"已转化",st_closed:"已关闭",
+    inq_type_product:"产品询盘",inq_type_company:"企业询盘",inq_about:"关于",inq_reply:"回复",inq_send:"发送",inq_you:"我",inq_supplier:"供应商",
+    inq_empty_t:"暂无询盘",inq_empty_d:"当您联系供应商后，对话将显示在这里。",
+    inq_locked_t:"登录后查看询盘",inq_locked_d:"登录以跟踪您的采购需求与供应商回复。",inq_search_ph:"按主题或产品搜索询盘",inq_results:"条结果",inq_col_subj:"询盘主题",inq_col_ref:"产品 / 供应商",inq_col_type:"类型",inq_col_status:"状态",inq_col_date:"日期",inq_col_ops:"操作",inq_view:"查看",inq_back:"返回列表",inq_ov_ref:"关联对象",inq_ov_qty:"数量",inq_ov_date:"创建时间",inq_ov_supplier:"供应商",inq_change_status:"变更状态",inq_msgs_t:"留言记录",inq_leave_msg:"留言跟进",inq_msg_ph:"输入您给供应商的跟进留言…",inq_msg_hint:"留言将发送给供应商用于询盘跟进，并非即时通讯。",inq_status_updated:"状态已更新",inq_created:"创建于",
+    acct_title:"我的账户",acct_profile:"个人资料",acct_address:"地址簿",acct_history:"浏览记录",
+    acct_profile_desc:"管理您的个人与公司信息",acct_addr_desc:"已保存的收货与账单地址",acct_hist_desc:"您最近浏览的产品",
+    acct_fullname:"姓名",acct_company:"公司",acct_country:"国家 / 地区",acct_email:"邮箱",acct_phone:"电话",acct_save:"保存修改",acct_saved:"资料已保存",
+    acct_addr_default:"默认",acct_addr_ship:"收货",acct_addr_bill:"账单",acct_edit:"编辑",acct_delete:"删除",acct_add_addr:"添加地址",
+    acct_locked_t:"登录后查看您的账户",acct_locked_d:"登录以管理资料、地址簿与浏览记录。",acct_view_products:"浏览产品",
+    merch_title:"成为卖家",merch_sub:"加入海南官方出海平台，触达全球买家。",merch_start:"开始申请",
+    merch_step1_t:"提交资料",merch_step1_d:"填写企业信息并上传资质证书。",merch_step2_t:"平台审核",merch_step2_d:"平台团队将在 3 个工作日内核验资质。",merch_step3_t:"签署协议",merch_step3_d:"在线确认卖家协议。",merch_step4_t:"入驻与培训",merch_step4_d:"完成店铺搭建与出口指导。",merch_step5_t:"正式上线",merch_step5_d:"发布产品并接收询盘。",
+    merch_ben_t:"为什么加入我们",merch_ben1_t:"全球触达",merch_ben1_d:"通过一个认证平台触达 60+ 国家的买家。",merch_ben2_t:"可信背书",merch_ben2_d:"平台认证增强买家信任，减少交易纠纷。",merch_ben3_t:"一站式服务",merch_ben3_d:"上架、询盘管理与出口支持一站搞定。",
+    merch_form_t:"卖家申请",merch_fsec1:"企业信息",merch_fsec2:"产品与资质",merch_fsec3:"联系人",
+    merch_cname:"公司名称",merch_ccat:"主营类目",merch_cexp:"出口年限",merch_cweb:"公司网址",merch_pdesc:"产品描述",merch_cert:"资质证书（逗号分隔）",
+    merch_contact_name:"联系人",merch_contact_title:"职位",merch_contact_email:"邮箱",merch_contact_phone:"电话",merch_submit:"提交申请",merch_submitted:"申请已提交！我们将在 3 个工作日内审核。",
+    verify_t:"验证您的邮箱",verify_d:"我们已向",verify_d2:"发送验证邮件，请查收并点击链接，或在下方输入 6 位验证码。",verify_resend:"重新发送邮件",verify_submit:"验证",verify_done_t:"邮箱已验证！",verify_done_d:"您的账户已激活，欢迎加入。",verify_go:"前往我的账户",
+    privacy_t:"隐私政策",terms_t:"服务条款",privacy_updated:"最后更新：2026 年 1 月",terms_updated:"最后更新：2026 年 1 月"
+  }
+};
+
+/* ===================== DATA ===================== */
+const RATES={USD:1,CNY:7.2,EUR:0.92,GBP:0.79,JPY:156,KRW:1350,AUD:1.52,CAD:1.36};
+const SYM={USD:'$',CNY:'¥',EUR:'€',GBP:'£',JPY:'¥',KRW:'₩',AUD:'A$',CAD:'C$'};
+const CUR_NAME={USD:'US Dollar',CNY:'Chinese Yuan',EUR:'Euro',GBP:'British Pound',JPY:'Japanese Yen',KRW:'Korean Won',AUD:'Australian Dollar',CAD:'Canadian Dollar'};
+const LANGS=[['EN','English'],['ZH','中文'],['ES','Español'],['FR','Français'],['DE','Deutsch'],['RU','Русский'],['PT','Português'],['AR','العربية'],['JA','日本語'],['KO','한국어'],['VI','Tiếng Việt']];
+const CATS=[
+  {id:'agri',name:'Tropical Agriculture',cn:'热带农业',icon:'i-leaf',color:'#059669'},
+  {id:'food',name:'Deep-processed Food',cn:'深加工食品',icon:'i-coffee',color:'#d97706'},
+  {id:'craft',name:'Handicrafts',cn:'特色手工艺',icon:'i-gem',color:'#be185d'},
+  {id:'other',name:'Other',cn:'其他',icon:'i-grid',color:'#0369A1'}
+];
+const GRAD={agri:'linear-gradient(135deg,#34d399,#059669)',food:'linear-gradient(135deg,#fbbf24,#d97706)',craft:'linear-gradient(135deg,#f472b6,#be185d)',other:'linear-gradient(135deg,#38bdf8,#0369A1)'};
+const SUPPLIERS=[
+  {id:'s1',name:'Hainan Tropical Agriculture Group',cn:'海南热带农业集团',short:'HTAG',cat:'agri',color:'#059669',products:148,country:'China',years:12,verified:true},
+  {id:'s2',name:'Coconut Island Foods',cn:'椰岛食品',short:'CIF',cat:'food',color:'#d97706',products:96,country:'China',years:9,verified:true},
+  {id:'s3',name:'Xinglong Coffee Co.',cn:'兴隆咖啡',short:'XC',cat:'food',color:'#b45309',products:54,country:'China',years:15,verified:true},
+  {id:'s4',name:'Li Brocade Workshop',cn:'黎锦工坊',short:'LBW',cat:'craft',color:'#be185d',products:38,country:'China',years:7,verified:true},
+  {id:'s5',name:'Qionghai Seafood Export',cn:'琼海海鲜出口',short:'QSE',cat:'agri',color:'#0d9488',products:72,country:'China',years:11,verified:true},
+  {id:'s6',name:'Hainan Fruit Union',cn:'海南水果联盟',short:'HFU',cat:'agri',color:'#16a34a',products:120,country:'China',years:8,verified:false}
+];
+const PRODUCTS=[
+  {id:'p1',name:'Natural Young Coconut',cn:'天然青椰子',cat:'agri',sup:'Hainan Tropical Agriculture Group',price:2.5,unit:'kg',moq:'500 kg',hs:'0801.12',views:1820,sales:340,ribbon:'Hot',tag:'Organic',
+    tiers:[{qty:'100-999 kg',price:2.60},{qty:'1,000-4,999 kg',price:2.30},{qty:'≥ 5,000 kg',price:2.05}],
+    trade:{leadTime:'12 days',port:'Haikou / Yangpu',payment:'T/T, L/C',supply:'8,000 t/year',packaging:'5 kg carton',certifications:['HACCP','HALAL'],shelfLife:'30 days'}},
+  {id:'p2',name:'Sun-dried Hainan Mango',cn:'海南芒果干',cat:'food',sup:'Hainan Tropical Agriculture Group',price:4.8,unit:'kg',moq:'200 kg',hs:'0804.50',views:1240,sales:210,ribbon:'New',tag:'Non-GMO',
+    tiers:[{qty:'50-499 kg',price:4.80},{qty:'500-1,999 kg',price:4.20},{qty:'≥ 2,000 kg',price:3.75}],
+    trade:{leadTime:'10 days',port:'Haikou / Sanya',payment:'T/T, L/C',supply:'3,000 kg/month',packaging:'10 kg carton',certifications:['ISO 22000','HACCP'],shelfLife:'12 months'}},
+  {id:'p3',name:'Xinglong Arabica Coffee Beans',cn:'兴隆阿拉比卡咖啡豆',cat:'food',sup:'Xinglong Coffee Co.',price:12.0,unit:'kg',moq:'50 kg',hs:'0901.21',views:980,sales:160,ribbon:'Premium',tag:'Single Origin',
+    tiers:[{qty:'50-199 kg',price:12.00},{qty:'200-999 kg',price:10.50},{qty:'≥ 1,000 kg',price:9.20}],
+    trade:{leadTime:'14 days',port:'Haikou',payment:'T/T, D/P',supply:'20 t/month',packaging:'25 kg bag with valve',certifications:['Organic','Fair Trade'],shelfLife:'18 months'}},
+  {id:'p4',name:'Hainan Black Pepper',cn:'海南黑胡椒',cat:'food',sup:'Coconut Island Foods',price:9.5,unit:'kg',moq:'100 kg',hs:'0904.11',views:760,sales:130,ribbon:'',tag:'Whole',
+    tiers:[{qty:'100-499 kg',price:9.50},{qty:'500-1,999 kg',price:8.40},{qty:'≥ 2,000 kg',price:7.60}],
+    trade:{leadTime:'10 days',port:'Haikou',payment:'T/T, L/C',supply:'10 t/month',packaging:'20 kg jute bag',certifications:['ISO 22000','HALAL'],shelfLife:'24 months'}},
+  {id:'p5',name:'Li Ethnic Brocade Scarf',cn:'黎锦围巾',cat:'craft',sup:'Li Brocade Workshop',price:25.0,unit:'pc',moq:'30 pc',hs:'6214.10',views:1540,sales:95,ribbon:'Heritage',tag:'Handmade',
+    tiers:[{qty:'30-99 pc',price:25.00},{qty:'100-499 pc',price:21.50},{qty:'≥ 500 pc',price:18.00}],
+    trade:{leadTime:'18 days',port:'Haikou',payment:'T/T, PayPal',supply:'2,000 pc/month',packaging:'Individual gift box',certifications:['Intangible Heritage','OEKO-TEX'],shelfLife:''}},
+  {id:'p6',name:'Coconut Candy Gift Box',cn:'椰糖礼盒',cat:'food',sup:'Coconut Island Foods',price:6.2,unit:'box',moq:'100 box',hs:'1704.90',views:690,sales:180,ribbon:'',tag:'Gift',
+    tiers:[{qty:'100-499 box',price:6.20},{qty:'500-2,499 box',price:5.40},{qty:'≥ 2,500 box',price:4.80}],
+    trade:{leadTime:'12 days',port:'Haikou / Yangpu',payment:'T/T, L/C',supply:'50,000 box/month',packaging:'24 boxes/ctn',certifications:['HACCP','HALAL'],shelfLife:'12 months'}},
+  {id:'p7',name:'Fresh Pineapple (Tainong)',cn:'台农菠萝',cat:'agri',sup:'Hainan Fruit Union',price:1.8,unit:'kg',moq:'800 kg',hs:'0804.30',views:1120,sales:420,ribbon:'Hot',tag:'Fresh',
+    tiers:[{qty:'500-1,999 kg',price:1.80},{qty:'2,000-7,999 kg',price:1.55},{qty:'≥ 8,000 kg',price:1.35}],
+    trade:{leadTime:'7 days',port:'Haikou / Qionghai',payment:'T/T, L/C',supply:'15,000 kg/week',packaging:'10 kg carton',certifications:['GAP','GlobalG.A.P.'],shelfLife:'14 days'}},
+  {id:'p8',name:'Coconut Shell Carving Art',cn:'椰雕工艺品',cat:'craft',sup:'Li Brocade Workshop',price:18.0,unit:'pc',moq:'20 pc',hs:'4419.00',views:870,sales:60,ribbon:'',tag:'Craft',
+    tiers:[{qty:'20-99 pc',price:18.00},{qty:'100-499 pc',price:15.00},{qty:'≥ 500 pc',price:12.50}],
+    trade:{leadTime:'20 days',port:'Haikou',payment:'T/T, PayPal',supply:'1,500 pc/month',packaging:'Bubble wrap + carton',certifications:['Intangible Heritage'],shelfLife:''}},
+  {id:'p9',name:'Dragon Fruit (Red Flesh)',cn:'红心火龙果',cat:'agri',sup:'Qionghai Seafood Export',price:3.2,unit:'kg',moq:'600 kg',hs:'0810.90',views:1340,sales:270,ribbon:'New',tag:'Fresh',
+    tiers:[{qty:'300-999 kg',price:3.20},{qty:'1,000-4,999 kg',price:2.75},{qty:'≥ 5,000 kg',price:2.40}],
+    trade:{leadTime:'8 days',port:'Qionghai / Haikou',payment:'T/T, L/C',supply:'10,000 kg/week',packaging:'5 kg carton',certifications:['GAP','HACCP'],shelfLife:'21 days'}},
+  {id:'p10',name:'Coconut Water (1L x12)',cn:'椰汁整箱',cat:'food',sup:'Coconut Island Foods',price:14.0,unit:'ctn',moq:'50 ctn',hs:'2202.99',views:1520,sales:310,ribbon:'Best Seller',tag:'Beverage',
+    tiers:[{qty:'50-199 ctn',price:14.00},{qty:'200-999 ctn',price:12.00},{qty:'≥ 1,000 ctn',price:10.50}],
+    trade:{leadTime:'12 days',port:'Haikou / Yangpu',payment:'T/T, L/C',supply:'8,000 ctn/month',packaging:'12 bottles/ctn',certifications:['HACCP','ISO 22000'],shelfLife:'12 months'}},
+  {id:'p11',name:'Wenchang Free-range Chicken',cn:'文昌鸡',cat:'agri',sup:'Hainan Tropical Agriculture Group',price:5.6,unit:'kg',moq:'300 kg',hs:'0207.14',views:640,sales:88,ribbon:'',tag:'Frozen',
+    tiers:[{qty:'200-999 kg',price:5.60},{qty:'1,000-4,999 kg',price:5.00},{qty:'≥ 5,000 kg',price:4.50}],
+    trade:{leadTime:'10 days',port:'Haikou',payment:'T/T, L/C',supply:'5,000 kg/week',packaging:'10 kg frozen carton',certifications:['HACCP','HALAL','CIQ'],shelfLife:'12 months frozen'}},
+  {id:'p12',name:'Shell Art Decoration',cn:'贝壳工艺品',cat:'craft',sup:'Li Brocade Workshop',price:11.0,unit:'pc',moq:'40 pc',hs:'8306.29',views:520,sales:45,ribbon:'',tag:'Home',
+    tiers:[{qty:'40-199 pc',price:11.00},{qty:'200-999 pc',price:9.00},{qty:'≥ 1,000 pc',price:7.50}],
+    trade:{leadTime:'16 days',port:'Haikou',payment:'T/T, PayPal',supply:'3,000 pc/month',packaging:'Individual box + carton',certifications:['Handmade Quality'],shelfLife:''}}
+];
+
+/* ===================== IMAGE ASSETS ===================== */
+const IMAGE_ASSETS='assets/';
+const IMAGE_MAP={
+  banner:['hero1.jpg','hero2.jpg','hero3.jpg'],
+  cat:{agri:'cat1.jpg',food:'cat2.jpg',craft:'cat4.jpg',other:'cat3.jpg'},
+  product:{
+    p1:'pimg_coconut.jpg',p2:'p2_mango.png',p3:'pimg_coffee.jpg',p4:'pimg_spice.jpg',
+    p5:'pimg_brocade.jpg',p6:'pimg_coconut.jpg',p7:'pimg_fruit.jpg',p8:'pimg_coconut.jpg',
+    p9:'pimg_fruit.jpg',p10:'pimg_coconut.jpg',p11:'cat_agri.png',p12:'pimg_brocade.jpg'
+  },
+  supplier:{s1:'cat1.jpg',s2:'cat2.jpg',s3:'cat2.jpg',s4:'cat4.jpg',s5:'cat1.jpg',s6:'cat1.jpg'},
+  supplierDetail:{hero:'factory.jpg',extra:'pimg_latex.jpg'}
+};
+
+/* ===================== BATCH2 DATA ===================== */
+const INQUIRIES=[
+  {id:'iq1',type:'product',refId:'p1',status:'responded',date:'2026-07-22',qty:'2 × 20ft containers',
+   subj:'Natural Young Coconut — 2x20ft container',
+   notes:[
+    {role:'you',text:'Hi, we would like to import natural young coconut. Could you share FOB price for 2x20ft containers?',time:'2026-07-22 09:14'},
+    {role:'supplier',text:'Hello! FOB Haikou USD 2.3/kg for 500kg+. Lead time 12 days. Certificates: HACCP, HALAL available.',time:'2026-07-22 15:40'},
+    {role:'you',text:'Great. Can you provide free samples before the bulk order?',time:'2026-07-23 10:05'},
+    {role:'supplier',text:'Sure, we can send 6 samples free of charge. Please share your delivery address.',time:'2026-07-23 18:22'}
+   ]},
+  {id:'iq2',type:'company',refId:'s2',status:'pending',date:'2026-07-28',qty:'—',
+   subj:'Coconut product catalog for German distributor',
+   notes:[
+    {role:'you',text:'We are a distributor in Germany. Interested in your coconut candy and coconut water. Please send the company catalog.',time:'2026-07-28 11:30'}
+   ]},
+  {id:'iq3',type:'product',refId:'p3',status:'follow',date:'2026-06-30',qty:'500kg / month',
+   subj:'Xinglong Arabica Coffee Beans — 500kg monthly',
+   notes:[
+    {role:'you',text:'Interested in Xinglong Arabica coffee beans, 500kg monthly.',time:'2026-06-30 08:50'},
+    {role:'supplier',text:'Thanks! We can offer single-origin beans at USD 11.5/kg. MOQ 50kg.',time:'2026-06-30 14:12'},
+    {role:'you',text:'We will place a trial order next month. Keep me posted on the new harvest.',time:'2026-07-15 09:00'},
+    {role:'supplier',text:'Will do. Sample roasting notes attached.',time:'2026-07-16 10:30'}
+   ]},
+  {id:'iq4',type:'company',refId:'s4',status:'converted',date:'2026-05-18',qty:'200 pcs',
+   subj:'Li Brocade Scarf — bulk order 200 pcs',
+   notes:[
+    {role:'you',text:'We love the Li brocade scarves. Placing an order for 200 pcs.',time:'2026-05-18 09:00'},
+    {role:'supplier',text:'Wonderful! Invoice sent. Production 20 days.',time:'2026-05-18 16:45'},
+    {role:'you',text:'Received and paid. Thank you!',time:'2026-05-20 11:20'},
+    {role:'supplier',text:'Order shipped via DHL. Tracking shared.',time:'2026-06-05 14:00'}
+   ]},
+  {id:'iq5',type:'product',refId:'p10',status:'closed',date:'2026-04-02',qty:'50 cartons',
+   subj:'Coconut Water 1L x12 — 50 cartons',
+   notes:[
+    {role:'you',text:'Coconut water 1L x12 carton, 50 ctns.',time:'2026-04-02 13:10'},
+    {role:'supplier',text:'Confirmed. Order completed.',time:'2026-04-03 09:30'}
+   ]}
+];
+const ADDRESSES=[
+  {id:'a1',type:'ship',default:true,name:'Global Trade Co.',line:'Unit 12, 88 Harbor Road',city:'Hamburg',country:'Germany',zip:'20457'},
+  {id:'a2',type:'bill',default:false,name:'Global Trade Co.',line:'Unit 12, 88 Harbor Road',city:'Hamburg',country:'Germany',zip:'20457'}
+];
+const HISTORY=[{pid:'p1'},{pid:'p3'},{pid:'p10'},{pid:'p5'},{pid:'p7'},{pid:'p9'},{pid:'p12'},{pid:'p2'}];
+const MERCH_STEPS=[
+  {t:'merch_step1_t',d:'merch_step1_d'},{t:'merch_step2_t',d:'merch_step2_d'},{t:'merch_step3_t',d:'merch_step3_d'},
+  {t:'merch_step4_t',d:'merch_step4_d'},{t:'merch_step5_t',d:'merch_step5_d'}
+];
+const MERCH_BENEFITS=[
+  {ic:'i-globe',t:'merch_ben1_t',d:'merch_ben1_d'},
+  {ic:'i-shield',t:'merch_ben2_t',d:'merch_ben2_d'},
+  {ic:'i-box',t:'merch_ben3_t',d:'merch_ben3_d'}
+];
+let inqFilter='all',inqSearch='',inqSel='iq1',acctTab='profile';
+
+/* ===================== STATE ===================== */
+let state={lang:'EN',cur:'USD',loggedIn:false,user:'Guest',catFilter:'all',supFilter:[],sort:'default',deliv:'Global',search:''};
+const isZh=()=>state.lang==='ZH';
+
+/* ===================== HELPERS ===================== */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+function T(k){const d=I18N[state.lang];if(d&&d[k]!=null)return d[k];return I18N.EN[k]!=null?I18N.EN[k]:k;}
+function fmt(usd){const v=usd*RATES[state.cur];let s=(state.cur==='JPY'||state.cur==='KRW')?Math.round(v).toLocaleString():v.toFixed(2);return SYM[state.cur]+s;}
+function icon(id,cls=''){return `<svg class="icon ${cls}"><use href="#${id}"/></svg>`;}
+function toast(msg){const t=$('#toast');$('#toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+function thumb(p,cls=''){
+  const c=CATS.find(x=>x.id===p.cat);
+  const img=IMAGE_MAP.product[p.id];
+  return `<div class="pthumb ${cls}" style="background:${GRAD[p.cat]}">
+    ${img?`<img src="${IMAGE_ASSETS}${img}" alt="${pn(p)}" loading="lazy" onerror="this.style.display='none'">`:''}
+    <span class="ph-ico">${icon(c.icon,'icon-lg')}</span>
+    ${p.ribbon?`<span class="ribbon">${p.ribbon}</span>`:''}
+    <span class="fav">${icon('i-heart','icon-sm')}</span>
+  </div>`;
+}
+function pn(p){return (isZh()&&p.cn)?p.cn:p.name;}
+function sn(s){return (isZh()&&s.cn)?s.cn:s.name;}
+function catName(id){const c=CATS.find(x=>x.id===id);return c?(isZh()?c.cn:c.name):id;}
+
+/* ===================== I18N APPLY ===================== */
+function applyI18n(){
+  $$('[data-i18n]').forEach(el=>{el.textContent=T(el.getAttribute('data-i18n'));});
+  $$('[data-i18n-ph]').forEach(el=>{el.setAttribute('placeholder',T(el.getAttribute('data-i18n-ph')));});
+}
+
+/* ===================== RENDER: HOME ===================== */
+function renderHome(){
+  $('#catGrid').innerHTML=CATS.map(c=>`<div class="cat-card" data-cat="${c.id}" style="background-image:url('${IMAGE_ASSETS}${IMAGE_MAP.cat[c.id]}')">
+    <div class="cat-overlay"></div>
+    <div class="cat-ico" style="background:${c.color}">${icon(c.icon,'icon-lg')}</div>
+    <h3>${catName(c.id)}</h3><span>${(isZh()?c.name:c.cn)} · ${T('browse_products')}</span></div>`).join('');
+  $('#hotGrid').innerHTML=PRODUCTS.slice(0,8).map(pcard).join('');
+  $('#featSuppliers').innerHTML=SUPPLIERS.slice(0,6).map(scard).join('');
+  $$('#catGrid .cat-card').forEach(el=>el.onclick=()=>{state.catFilter=el.dataset.cat;navigate('products');});
+}
+function pcard(p){const c=CATS.find(x=>x.id===p.cat);return `<div class="pcard" data-pid="${p.id}">
+  ${thumb(p)}
+  <div class="pbody">
+    <div class="pco">${p.sup.split(' ')[0]}</div>
+    <div class="pname">${pn(p)}</div>
+    <div class="pmeta">${icon('i-eye','icon-sm')} ${p.views.toLocaleString()} ${T('views')} · ${T('moq')} ${p.moq}</div>
+    <div class="pprice"><span class="now price" data-usd="${p.price}">${fmt(p.price)}</span><span class="orig">/ ${p.unit}</span></div>
+  </div></div>`;}
+function scard(s){
+  const img=IMAGE_MAP.supplier[s.id];
+  return `<div class="scard" data-sid="${s.id}" style="background-image:url('${IMAGE_ASSETS}${img}')">
+  <div class="scard-overlay"></div>
+  <div class="scard-inner">
+    <div class="srow"><div class="slogo" style="background:${s.color}">${s.short}</div>
+    <div><h3>${sn(s)}</h3><div class="stag">${catName(s.cat)}${s.verified?' · '+icon('i-shield','icon-sm')+' '+T('sd_verified'):''}</div></div></div>
+    <div class="sstats"><div><b>${s.products}</b>${T('card_products')}</div><div><b>${s.years}y</b>${T('card_exp')}</div><div><b>${s.country}</b>${T('card_origin')}</div></div>
+  </div>
+  </div>`;
+}
+
+/* ===================== RENDER: PRODUCTS ===================== */
+function renderProducts(){
+  const tree=[{id:'all',name:T('all_categories'),n:PRODUCTS.length},
+    ...CATS.map(c=>({id:c.id,name:catName(c.id),n:PRODUCTS.filter(p=>p.cat===c.id).length}))];
+  $('#catTree').innerHTML=tree.map(t=>`<li data-cat="${t.id}" class="${state.catFilter===t.id?'active':''}">${t.name}<span class="n">${t.n}</span></li>`).join('');
+  $$('#catTree li').forEach(li=>li.onclick=()=>{state.catFilter=li.dataset.cat;renderProducts();});
+  applyProdFilter();
+}
+function applyProdFilter(){
+  let list=PRODUCTS.slice();
+  if(state.catFilter!=='all')list=list.filter(p=>p.cat===state.catFilter);
+  if(state.search)list=list.filter(p=>p.name.toLowerCase().includes(state.search)||(p.cn&&p.cn.includes(state.search)));
+  const mn=$('#priceMin').value,mx=$('#priceMax').value;
+  if(mn)list=list.filter(p=>p.price>=+mn);if(mx)list=list.filter(p=>p.price<=+mx);
+  if(state.supFilter.length)list=list.filter(p=>state.supFilter.includes(p.sup));
+  if(state.sort==='priceAsc')list.sort((a,b)=>a.price-b.price);
+  if(state.sort==='priceDesc')list.sort((a,b)=>b.price-a.price);
+  if(state.sort==='new')list.reverse();
+  if(state.sort==='views')list.sort((a,b)=>b.views-a.views);
+  $('#prodCount').textContent=list.length;
+  $('#prodGrid').innerHTML=list.length?list.map(pcard).join(''):'<p style="color:var(--color-muted);padding:40px">'+T('no_products')+'</p>';
+  bindCards();
+}
+
+/* ===================== RENDER: PRODUCT DETAIL ===================== */
+function shareProduct(id){
+  const p=PRODUCTS.find(x=>x.id===id);if(!p)return;
+  const url=location.href.split('#')[0]+'#product-detail/'+id;
+  const text=`${pn(p)} - ${p.moq} MOQ`;
+  if(navigator.share){navigator.share({title:pn(p),text:text,url:url}).catch(()=>{});}
+  else if(navigator.clipboard){navigator.clipboard.writeText(url).then(()=>toast(T('share_copied')));}
+  else{toast(text+' '+url);}
+}
+function renderPDetail(id){
+  const p=PRODUCTS.find(x=>x.id===id);if(!p)return;
+  const s=SUPPLIERS.find(x=>x.sup===p.sup)||{name:p.sup};
+  $('#pdCrumb').textContent=pn(p);
+  const desc=isZh()
+    ? `${pn(p)} 是来自中国海南的优质出口产品，在认证出口标准下采购与加工，适合国际分销。支持定制包装与自有品牌代工。`
+    : `${p.name} (${p.cn}) is a premium export product from Hainan, China. Sourced and processed under certified export standards, suitable for international distribution. Custom packaging and private labeling available on request.`;
+  const supplierDesc=isZh()
+    ? `${sn(s)} 是海南认证特色出口商，拥有多年国际贸易经验，主营 ${catName(p.cat)} 产品。`
+    : `${sn(s)} is a certified Hainan specialty exporter with years of international trade experience, specializing in ${catName(p.cat)} products.`;
+  const pdImg=IMAGE_MAP.product[p.id];
+  const cat=CATS.find(c=>c.id===p.cat);
+  const tierRows=(p.tiers||[]).map((t,i)=>`<div class="pd-tier ${i===0?'active':''}"><div class="qty">${t.qty}</div><div class="pr price" data-usd="${t.price}">${fmt(t.price)}</div></div>`).join('');
+  const trade=p.trade||{};
+  const tradeItems=[
+    {k:'pd_trade_lead_time',v:trade.leadTime||'—'},
+    {k:'pd_trade_port',v:trade.port||'—'},
+    {k:'pd_trade_payment',v:trade.payment||'—'},
+    {k:'pd_trade_supply',v:trade.supply||'—'},
+    {k:'pd_trade_packaging',v:trade.packaging||'—'},
+    ...(trade.shelfLife?[{k:'pd_trade_shelf_life',v:trade.shelfLife}]:[])
+  ];
+  const tradeGrid=tradeItems.map(it=>`<div class="trade-item"><div class="k">${T(it.k)}</div><div class="v">${it.v}</div></div>`).join('');
+  const certs=(trade.certifications||[]).map(c=>`<span class="cert-tag">${c}</span>`).join('');
+  const supProds=PRODUCTS.filter(x=>x.sup===p.sup&&x.id!==p.id).slice(0,3);
+  $('#pdContent').innerHTML=`
+    <div class="pd-top">
+      <div class="pd-gallery">
+        <div class="main-img" style="background:${GRAD[p.cat]}">
+          <span class="img-tag">${icon('i-tag','icon-xs')} ${catName(p.cat)}</span>
+          ${pdImg?`<img src="${IMAGE_ASSETS}${pdImg}" alt="${pn(p)}">`:icon(cat.icon,'icon-lg')}
+          <span class="zoom-hint">${icon('i-eye','icon-xs')} ${T('pd_zoom_hint')}</span>
+        </div>
+        <div class="thumbs">${[0,1,2,3].map(i=>`<div class="t ${i===0?'active':''}" style="background:${GRAD[p.cat]};opacity:${1-i*0.12}">${pdImg?`<img src="${IMAGE_ASSETS}${pdImg}" alt="">`:icon(cat.icon,'icon-sm')}</div>`).join('')}</div>
+      </div>
+      <div class="pd-info">
+        <h1>${pn(p)}</h1>
+        <div class="tags">
+          <span class="accent">${catName(p.cat)}</span>
+          ${p.ribbon?`<span>${p.ribbon}</span>`:''}
+          <span>${p.tag}</span>
+          <span>${p.views.toLocaleString()} ${T('views')}</span>
+        </div>
+        <div class="co" data-sid="${s.id||''}">${icon('i-store','icon-sm')} ${sn(s)}</div>
+        <div class="pd-price">
+          <div class="ref">
+            <span class="big price" data-usd="${p.price}">${fmt(p.price)}</span>
+            <span class="unit">/ ${p.unit}</span>
+          </div>
+          <div class="ref-lbl">${T('pd_ref_price')}</div>
+          <div class="pd-tiers">${tierRows}</div>
+        </div>
+        <div class="pd-meta">
+          <div class="m"><div class="k">${T('moq_label')}</div><div class="v">${p.moq}</div></div>
+          <div class="m"><div class="k">${T('hs_code')}</div><div class="v">${p.hs}</div></div>
+          <div class="m"><div class="k">${T('pd_trade_lead_time')}</div><div class="v">${trade.leadTime||'—'}</div></div>
+          <div class="m"><div class="k">${T('pd_trade_port')}</div><div class="v">${trade.port||'—'}</div></div>
+        </div>
+        <div class="pd-actions">
+          <button class="btn btn-primary" id="pdInquire">${icon('i-chat','icon-sm')} ${T('send_inquiry')}</button>
+          <button class="btn btn-ghost" id="pdContact">${icon('i-store','icon-sm')} ${T('pd_contact_supplier')}</button>
+          <button class="btn-share" id="pdShare" title="${T('pd_share')}">${icon('i-share','icon-sm')}</button>
+        </div>
+        <div class="pd-sup-card" data-sid="${s.id||''}">
+          <div class="logo" style="background:${s.color||cat.color}">${s.short||sn(s).slice(0,2).toUpperCase()}</div>
+          <div class="nm">
+            <div class="t">${sn(s)}</div>
+            <div class="s">${s.verified?icon('i-shield','icon-xs')+' '+T('sd_verified')+' · ':''}${s.years||'-'} ${T('yrs_export')}</div>
+          </div>
+          <div class="arr">${icon('i-arrow-r','icon-sm')}</div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-tabs">
+      <div class="pd-tab-nav">
+        <button class="active" data-tab="desc">${icon('i-doc','icon-xs')} ${T('pd_tab_desc')}</button>
+        <button data-tab="specs">${icon('i-grid','icon-xs')} ${T('pd_tab_specs')}</button>
+        <button data-tab="trade">${icon('i-truck','icon-xs')} ${T('pd_tab_trade')}</button>
+        <button data-tab="supplier">${icon('i-store','icon-xs')} ${T('pd_tab_supplier')}</button>
+      </div>
+      <div class="pd-panel active" data-panel="desc">
+        <div class="pd-card">
+          <h3>${icon('i-doc','icon-sm')} ${T('prod_desc')}</h3>
+          <p class="pd-desc">${desc}</p>
+        </div>
+      </div>
+      <div class="pd-panel" data-panel="specs">
+        <div class="pd-card">
+          <h3>${icon('i-grid','icon-sm')} ${T('specifications')}</h3>
+          <table class="spec-table">
+            <tr><td>${T('spec_product_name')}</td><td>${pn(p)} / ${p.cn}</td></tr>
+            <tr><td>${T('spec_category')}</td><td>${catName(p.cat)}</td></tr>
+            <tr><td>${T('spec_unit_price')}</td><td class="price" data-usd="${p.price}">${fmt(p.price)} / ${p.unit}</td></tr>
+            <tr><td>${T('moq_label')}</td><td>${p.moq}</td></tr>
+            <tr><td>${T('hs_code')}</td><td>${p.hs}</td></tr>
+            <tr><td>${T('tag_label')}</td><td>${p.tag}</td></tr>
+            <tr><td>${T('pd_trade_packaging')}</td><td>${trade.packaging||'—'}</td></tr>
+            <tr><td>${T('pd_trade_shelf_life')}</td><td>${trade.shelfLife||'—'}</td></tr>
+            <tr><td>${T('f_supplier')}</td><td>${sn(s)}</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="pd-panel" data-panel="trade">
+        <div class="pd-card">
+          <h3>${icon('i-truck','icon-sm')} ${T('pd_tab_trade')}</h3>
+          <div class="trade-grid">${tradeGrid}</div>
+          ${certs?`<div style="margin-top:18px"><div class="k" style="font-size:12px;color:var(--color-muted);font-weight:600;margin-bottom:8px">${T('pd_trade_certifications')}</div><div class="cert-list">${certs}</div></div>`:''}
+        </div>
+      </div>
+      <div class="pd-panel" data-panel="supplier">
+        <div class="pd-card">
+          <h3>${icon('i-store','icon-sm')} ${T('company_profile')}</h3>
+          <div class="supplier-prof" data-sid="${s.id||''}">
+            <div class="logo" style="background:${s.color||cat.color}">${s.short||sn(s).slice(0,2).toUpperCase()}</div>
+            <div class="meta">
+              <h4>${sn(s)}</h4>
+              <p>${supplierDesc}</p>
+              <div class="cert-list" style="margin-top:10px">${certs?certs:''}</div>
+            </div>
+          </div>
+          <div class="supplier-stats">
+            <div class="st"><div class="n">${s.products||supProds.length+1}</div><div class="l">${T('card_products')}</div></div>
+            <div class="st"><div class="n">${s.years||'—'}</div><div class="l">${T('yrs_export')}</div></div>
+            <div class="st"><div class="n">${s.country||'China'}</div><div class="l">${T('card_origin')}</div></div>
+            <div class="st"><div class="n">${s.verified?T('yes'):T('no')}</div><div class="l">${T('hl_verified')}</div></div>
+          </div>
+        </div>
+        ${supProds.length?`<div class="pd-card" style="margin-top:18px"><h3>${icon('i-grid','icon-sm')} ${T('pd_sup_more')} (${supProds.length})</h3><div class="pgrid" style="grid-template-columns:repeat(3,1fr)">${supProds.map(pcard).join('')}</div></div>`:''}
+      </div>
+    </div>
+    <div class="pd-section" style="margin-top:10px">
+      <h3>${icon('i-star','icon-sm')} ${T('related')}</h3>
+      <div class="rel-grid">${PRODUCTS.filter(x=>x.cat===p.cat&&x.id!==p.id).slice(0,4).map(pcard).join('')}</div>
+    </div>`;
+  $('#pdInquire').onclick=()=>{if(!state.loggedIn){toast(T('sign_in_to_view')+' · '+T('send_inquiry'));pendingInquiry=id;navigate('login');}else{toast(T('send_inquiry')+' ('+T('view_all')+')');}};
+  $('#pdContact').onclick=()=>{if(s.id)navigate('supplier-detail',s.id);};
+  $('#pdShare').onclick=()=>shareProduct(id);
+  $$('#pdContent .pd-tab-nav button').forEach(btn=>btn.onclick=()=>{
+    $$('#pdContent .pd-tab-nav button').forEach(b=>b.classList.remove('active'));
+    $$('#pdContent .pd-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    const panel=$('#pdContent .pd-panel[data-panel="'+btn.dataset.tab+'"]');
+    if(panel)panel.classList.add('active');
+  });
+  $$('#pdContent .pd-tier').forEach((t,i)=>t.onclick=()=>{
+    $$('#pdContent .pd-tier').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const tier=p.tiers[i];if(!tier)return;
+    const big=$('#pdContent .pd-price .big');if(big){big.dataset.usd=tier.price;big.textContent=fmt(tier.price);}
+  });
+  bindCards();
+  $$('#pdContent [data-sid]').forEach(el=>el.onclick=()=>{if(el.dataset.sid)navigate('supplier-detail',el.dataset.sid);});
+}
+
+/* ===================== RENDER: SUPPLIERS ===================== */
+function renderSuppliers(){
+  const menu=[{id:'all',name:T('all_categories')},...CATS.map(c=>({id:c.id,name:catName(c.id)}))];
+  $('#supCatMenu').innerHTML=menu.map(m=>`<div class="dd-item" data-cat="${m.id}">${m.name}</div>`).join('');
+  $('#supCatLabel').textContent=T('all_categories');
+  $$('#supCatMenu .dd-item').forEach(it=>it.onclick=()=>{state.catFilter=it.dataset.cat;$('#supCatLabel').textContent=it.dataset.cat==='all'?T('all_categories'):catName(it.dataset.cat);$('#supCatMenu').classList.remove('open');applySupFilter();});
+  applySupFilter();
+}
+function applySupFilter(){
+  let list=SUPPLIERS.slice();
+  if(state.catFilter!=='all')list=list.filter(s=>s.cat===state.catFilter);
+  $('#supCount').textContent=list.length;
+  $('#supGrid').innerHTML=list.map(scard).join('');
+  bindSup();
+}
+
+/* ===================== RENDER: SUPPLIER DETAIL ===================== */
+function renderSDetail(id){
+  const s=SUPPLIERS.find(x=>x.id===id);if(!s)return;
+  const prods=PRODUCTS.filter(p=>p.sup===s.name);
+  $('#sdHero').innerHTML=`<div class="sd-hero-bg" style="background-image:url('${IMAGE_ASSETS}${IMAGE_MAP.supplierDetail.hero}')"></div><div class="sd-hero-overlay"></div><div class="srow"><div class="slogo" style="background:${s.color}">${s.short}</div>
+    <div><h1>${sn(s)}</h1><div class="tags"><span>${catName(s.cat)}</span>${s.verified?'<span>'+icon('i-shield','icon-sm')+' '+T('sd_verified')+'</span>':''}<span>${s.years} ${T('yrs_export')}</span><span>${s.country}</span></div></div></div>`;
+  $('#sdBody').innerHTML=`
+    <div>
+      <div class="sd-card"><h3>${icon('i-doc','icon-sm')} ${T('company_profile')}</h3>
+        <p style="font-size:14px;color:var(--color-secondary);line-height:1.7">${sn(s)} ${isZh()?'是':'is a certified Hainan specialty exporter with'} ${s.years} ${isZh()?'年国际贸易经验的认证特色出口商，主营':'years of international trade experience. We specialize in'} ${catName(s.cat)} ${isZh()?'产品，服务 30+ 国家买家。':'products and serve buyers across 30+ countries.'}</p></div>
+      <div class="sd-card"><h3>${icon('i-gem','icon-sm')} ${T('honors')}</h3>
+        <div class="honors">${['ISO 9001','HACCP','Export License','Organic Cert'].map(h=>`<div class="honor">${icon('i-shield','icon-sm')}${h}</div>`).join('')}</div></div>
+      <div class="sd-card"><h3>${icon('i-grid','icon-sm')} ${T('products_label')} (${prods.length})</h3>
+        <div class="pgrid" style="grid-template-columns:repeat(3,1fr)">${prods.map(pcard).join('')}</div></div>
+    </div>
+    <div>
+      <div class="sd-card"><h3>${icon('i-chat','icon-sm')} ${T('contact_inquiry')}</h3>
+        <div id="sdContact"></div></div>
+      <div class="sd-card"><h3>${icon('i-star','icon-sm')} ${T('highlights')}</h3>
+        <div class="pd-meta" style="grid-template-columns:1fr 1fr">
+          <div class="m"><div class="k">${T('hl_products')}</div><div class="v">${s.products}</div></div>
+          <div class="m"><div class="k">${T('hl_export_yrs')}</div><div class="v">${s.years}</div></div>
+          <div class="m"><div class="k">${T('hl_origin')}</div><div class="v">Hainan</div></div>
+          <div class="m"><div class="k">${T('hl_verified')}</div><div class="v">${s.verified?T('yes'):T('no')}</div></div>
+        </div>
+        <button class="btn btn-primary btn-block" id="sdInquire" style="margin-top:14px">${icon('i-chat','icon-sm')} ${T('send_company_inquiry')}</button>
+      </div>
+      <div class="sd-card"><h3>${icon('i-grid','icon-sm')} ${T('factory_photos')}</h3>
+        <div class="sd-gallery"><img src="${IMAGE_ASSETS}${IMAGE_MAP.supplierDetail.hero}" alt="${T('factory_photos')}"><img src="${IMAGE_ASSETS}${IMAGE_MAP.supplierDetail.extra}" alt="${T('company_album')}"></div>
+      </div>
+    </div>`;
+  $('#sdInquire').onclick=()=>{if(!state.loggedIn){toast(T('sign_in_to_view')+' · '+T('send_company_inquiry'));pendingInquiry=s.id;navigate('login');}else toast(T('send_company_inquiry')+' ('+T('view_all')+')');};
+  if(state.loggedIn){
+    $('#sdContact').innerHTML=`<div class="contact-info">
+      <div class="ci">${icon('i-user')} ${T('contact_inquiry')}: ${s.short} Export Team</div>
+      <div class="ci">${icon('i-phone')} +86 898 6${Math.floor(1000000+Math.random()*9000000)}</div>
+      <div class="ci">${icon('i-mail')} export@${s.short.toLowerCase()}.com</div></div>`;
+  }else{
+    $('#sdContact').innerHTML=`<div class="contact-locked">${icon('i-shield')}<p>${T('contact_locked')}</p><button class="btn btn-primary" style="margin-top:14px" data-route="login">${T('sign_in_to_view')}</button></div>`;
+  }
+  bindCards();
+  $$('#sdContact [data-route]').forEach(b=>b.onclick=()=>navigate(b.dataset.route));
+}
+
+/* ===================== NAV / ROUTER ===================== */
+let pendingInquiry=null, currentRoute='home', currentParam=null;
+/* ===================== RENDER: INQUIRIES ===================== */
+function refLabel(i){if(i.type==='product'){const p=PRODUCTS.find(x=>x.id===i.refId);return p?pn(p):i.refId;}const s=SUPPLIERS.find(x=>x.id===i.refId);return s?sn(s):i.refId;}
+function inqSupplierName(i){if(i.type==='product'){const p=PRODUCTS.find(x=>x.id===i.refId);return p?p.sup:'Supplier';}const s=SUPPLIERS.find(x=>x.id===i.refId);return s?sn(s):'Supplier';}
+function emptyInq(){return `<div style="text-align:center;padding:60px 10px;color:var(--color-muted)"><img src="${IMAGE_ASSETS}empty_inq.png" style="width:130px;height:130px;object-fit:contain;margin:0 auto 14px" alt=""><p style="font-weight:700;color:var(--color-secondary);font-size:15px">${T('inq_empty_t')}</p><p style="font-size:13px;margin-top:6px">${T('inq_empty_d')}</p></div>`;}
+function lockCard(t,d){return `<div class="inq-detail-card" style="max-width:520px;margin:40px auto;text-align:center;padding:40px 24px">${icon('i-lock','icon-lg')}<h3 style="margin-top:16px;color:var(--color-primary);font-size:18px">${T(t)}</h3><p style="color:var(--color-muted);margin-top:10px;font-size:13.5px">${T(d)}</p><button class="btn btn-primary" style="margin-top:18px" onclick="navigate('login')">${T('sign_in')}</button></div>`;}
+function inqRow(i){return `<div class="inq-row" data-id="${i.id}">
+  <div><div class="ttl">${i.subj}</div><div class="sub2">${i.qty}</div></div>
+  <div class="ref">${refLabel(i)}</div>
+  <div>${i.type==='product'?T('inq_type_product'):T('inq_type_company')}</div>
+  <div><span class="badge ${i.status}"><span class="dot"></span>${T('st_'+i.status)}</span></div>
+  <div>${i.date}</div>
+  <div class="inq-ops">
+    <select class="inq-status-sel" data-id="${i.id}" onclick="event.stopPropagation()">${['pending','responded','follow','converted','closed'].map(s=>`<option value="${s}" ${i.status===s?'selected':''}>${T('st_'+s)}</option>`).join('')}</select>
+    <button class="inq-view-btn" data-id="${i.id}">${icon('i-eye','icon-sm')} ${T('inq_view')}</button>
+  </div></div>`;}
+function renderInquiries(){
+  const wrap=$('#inqList');if(!wrap)return;
+  if(!state.loggedIn){wrap.innerHTML=lockCard('inq_locked_t','inq_locked_d');return;}
+  const statuses=['all','pending','responded','follow','converted','closed'];
+  const counts={all:INQUIRIES.length,pending:0,responded:0,follow:0,converted:0,closed:0};
+  INQUIRIES.forEach(i=>{if(counts[i.status]!=null)counts[i.status]++;});
+  const kw=inqSearch.trim().toLowerCase();
+  const list=INQUIRIES.filter(i=>(inqFilter==='all'||i.status===inqFilter)&&(!kw||i.subj.toLowerCase().includes(kw)||refLabel(i).toLowerCase().includes(kw)));
+  wrap.innerHTML=`<div class="inq-stats">${statuses.map(s=>`<div class="inq-stat ${inqFilter===s?'active':''}" data-f="${s}"><div class="n">${counts[s]}</div><div class="l">${s!=='all'?`<span class="dot ${s}"></span>`:''}${T('inq_filter_'+s)}</div></div>`).join('')}</div>
+    <div class="inq-toolbar"><div class="inq-search">${icon('i-search','icon-sm')}<input id="inqSearch" placeholder="${T('inq_search_ph')}" value="${inqSearch}"></div><div class="inq-count">${list.length} ${T('inq_results')}</div></div>
+    <div class="inq-table"><div class="inq-thead"><div>${T('inq_col_subj')}</div><div>${T('inq_col_ref')}</div><div>${T('inq_col_type')}</div><div>${T('inq_col_status')}</div><div>${T('inq_col_date')}</div><div>${T('inq_col_ops')}</div></div>${list.length?list.map(inqRow).join(''):emptyInq()}</div>`;
+  $$('.inq-stats .inq-stat').forEach(c=>c.onclick=()=>{inqFilter=c.dataset.f;renderInquiries();});
+  const se=$('#inqSearch');if(se)se.oninput=()=>{inqSearch=se.value;renderInquiries();};
+  $$('.inq-row').forEach(r=>r.onclick=()=>navigate('inq-detail',r.dataset.id));
+  $$('.inq-view-btn').forEach(b=>b.onclick=e=>{e.stopPropagation();navigate('inq-detail',b.dataset.id);});
+  $$('.inq-status-sel').forEach(s=>s.onchange=()=>{const i=INQUIRIES.find(x=>x.id===s.dataset.id);if(i){i.status=s.value;renderInquiries();toast(T('inq_status_updated'));}});
+}
+function inqNote(i,m){const isYou=m.role==='you';const who=isYou?T('inq_you'):inqSupplierName(i);const ini=isYou?'Y':(inqSupplierName(i)[0]||'S');return `<div class="inq-msg ${isYou?'you':'sup'}"><div class="av">${ini}</div><div class="body"><div class="who">${who} <span class="time">${m.time||''}</span></div><div class="text">${m.text}</div></div></div>`;}
+function renderInqDetail(id){
+  const el=$('#inqDetail');if(!el)return;
+  const i=(INQUIRIES.find(x=>x.id===id)||INQUIRIES[0]);if(!i){el.innerHTML=emptyInq();return;}
+  const supplier=inqSupplierName(i);
+  const statuses=['pending','responded','follow','converted','closed'];
+  el.innerHTML=`<div class="inq-detail-wrap">
+    <div class="inq-back" onclick="navigate('inquiries')">${icon('i-arrow-left','icon-sm')} ${T('inq_back')}</div>
+    <div class="inq-detail-card">
+      <div class="dhead"><div><h2>${i.subj}</h2><div class="sub">${i.type==='product'?T('inq_type_product'):T('inq_type_company')} · ${refLabel(i)} · ${T('inq_created')}: ${i.date}</div></div><span class="badge ${i.status}"><span class="dot"></span>${T('st_'+i.status)}</span></div>
+      <div class="inq-overview"><div class="it"><div class="k">${T('inq_ov_ref')}</div><div class="v">${refLabel(i)}</div></div><div class="it"><div class="k">${T('inq_ov_qty')}</div><div class="v">${i.qty}</div></div><div class="it"><div class="k">${T('inq_ov_date')}</div><div class="v">${i.date}</div></div><div class="it"><div class="k">${T('inq_ov_supplier')}</div><div class="v">${supplier}</div></div></div>
+      <div class="inq-actions"><span class="lbl-s">${T('inq_change_status')}:</span>${statuses.map(s=>`<button class="st-btn ${i.status===s?'cur':''}" data-st="${s}">${T('st_'+s)}</button>`).join('')}</div>
+      <div class="inq-msgs-title">${icon('i-mail','icon-sm')} ${T('inq_msgs_t')}</div>
+      <div class="inq-msgs">${i.notes.map(m=>inqNote(i,m)).join('')}</div>
+      <div class="inq-compose"><div class="ch">${icon('i-send','icon-sm')} ${T('inq_leave_msg')}</div><textarea id="inqInput" rows="3" placeholder="${T('inq_msg_ph')}"></textarea><div class="hint">${T('inq_msg_hint')}</div><div class="row"><button class="btn btn-primary" id="inqSend">${icon('i-send','icon-sm')} ${T('inq_send')}</button></div></div>
+    </div></div>`;
+  $$('.st-btn').forEach(b=>b.onclick=()=>{i.status=b.dataset.st;renderInqDetail(i.id);toast(T('inq_status_updated'));});
+  const send=$('#inqSend');if(send)send.onclick=()=>{const v=$('#inqInput').value.trim();if(!v){toast(T('inq_reply'));return;}const t=new Date();const p=n=>String(n).padStart(2,'0');const ts=`${t.getFullYear()}-${p(t.getMonth()+1)}-${p(t.getDate())} ${p(t.getHours())}:${p(t.getMinutes())}`;i.notes.push({role:'you',text:v,time:ts});renderInqDetail(i.id);};
+}
+
+/* ===================== RENDER: ACCOUNT ===================== */
+function addrCard(a){const typeLabel=a.type==='ship'?T('acct_addr_ship'):T('acct_addr_bill');return `<div class="addr-card">${a.default?`<span class="tag">${T('acct_addr_default')}</span>`:''}<h4>${a.name}</h4><p>${a.line}<br>${a.city}, ${a.country} ${a.zip}</p><div class="acts"><span onclick="toast('${T('acct_edit')}')">${T('acct_edit')}</span><span onclick="toast('${T('acct_delete')}')">${T('acct_delete')}</span></div><div style="margin-top:10px;font-size:12px;color:var(--color-muted)">${typeLabel}</div></div>`;}
+function renderAcctPanel(){
+  const el=$('#acctPanel');if(!el)return;
+  if(acctTab==='profile'){
+    el.innerHTML=`<h3>${T('acct_profile')}</h3><p class="desc">${T('acct_profile_desc')}</p><div class="form-grid"><div><label class="lbl">${T('acct_fullname')}</label><input class="inp" id="afName" value="${state.user}"></div><div><label class="lbl">${T('acct_company')}</label><input class="inp" id="afCompany" value="Global Trade Co."></div><div><label class="lbl">${T('acct_country')}</label><input class="inp" id="afCountry" value="Germany"></div><div><label class="lbl">${T('acct_email')}</label><input class="inp" id="afEmail" value="${state.user.toLowerCase()}@buyer.com"></div><div class="full"><label class="lbl">${T('acct_phone')}</label><input class="inp" id="afPhone" value="+49 40 1234567"></div></div><button class="btn btn-primary" style="margin-top:18px" id="afSave">${T('acct_save')}</button>`;
+    $('#afSave').onclick=()=>toast(T('acct_saved'));
+  }else if(acctTab==='address'){
+    el.innerHTML=`<h3>${T('acct_address')}</h3><p class="desc">${T('acct_addr_desc')}</p><div class="addr-grid">${ADDRESSES.map(addrCard).join('')}<div class="addr-add" onclick="toast('${T('acct_add_addr')}')">${icon('i-plus','icon-lg')}<span>${T('acct_add_addr')}</span></div></div>`;
+  }else{
+    const hs=HISTORY.map(h=>PRODUCTS.find(p=>p.id===h.pid)).filter(Boolean).slice(0,8);
+    el.innerHTML=`<h3>${T('acct_history')}</h3><p class="desc">${T('acct_hist_desc')}</p><div class="hist-grid">${hs.map(h=>`<div class="pcard mini" data-pid="${h.id}" style="border:1px solid var(--color-border);border-radius:var(--radius);overflow:hidden;cursor:pointer">${thumb(h)}<div style="padding:10px 12px"><div style="font-size:13px;font-weight:600;color:var(--color-primary)">${pn(h)}</div><div style="font-size:12px;color:var(--color-muted);margin-top:4px">${fmt(h.price)} / ${h.unit}</div></div></div>`).join('')}</div>`;
+    $$('#acctPanel .pcard').forEach(c=>c.onclick=()=>navigate('product-detail',c.dataset.pid));
+  }
+}
+function renderAccount(){
+  const wrap=$('#acctLayout');if(!wrap)return;
+  if(!state.loggedIn){wrap.innerHTML=`<div class="acct-panel" style="grid-column:1/-1;text-align:center;padding:60px 20px">${icon('i-lock','icon-lg')}<h3 style="margin-top:14px">${T('acct_locked_t')}</h3><p style="color:var(--color-muted);margin-top:10px;font-size:13.5px">${T('acct_locked_d')}</p><button class="btn btn-primary" style="margin-top:18px" onclick="navigate('login')">${T('sign_in')}</button></div>`;return;}
+  const items=[['profile',T('acct_profile'),'i-user'],['address',T('acct_address'),'i-pin'],['history',T('acct_history'),'i-clock']];
+  wrap.innerHTML=`<div class="acct-side"><div class="acct-banner"></div><div class="acct-id"><div class="av">${state.user[0]||'G'}</div><div class="nm">${state.user}</div><div class="em">${state.user.toLowerCase()}@buyer.com</div></div><div class="acct-menu">${items.map(it=>`<a class="${acctTab===it[0]?'active':''}" data-tab="${it[0]}">${icon(it[2],'icon-sm')} ${it[1]}</a>`).join('')}</div></div><div class="acct-panel" id="acctPanel"></div>`;
+  $$('.acct-menu a').forEach(a=>a.onclick=()=>{acctTab=a.dataset.tab;renderAccount();});
+  renderAcctPanel();
+}
+
+/* ===================== RENDER: MERCHANT ===================== */
+function renderMerchant(){
+  const steps=$('#merchSteps');if(steps)steps.innerHTML=MERCH_STEPS.map((s,i)=>`<div class="step ${i<2?'done':''}"><div class="num">${i+1}</div><h4>${T(s.t)}</h4><p>${T(s.d)}</p></div>`).join('');
+  const ben=$('#merchBenefits');if(ben)ben.innerHTML=MERCH_BENEFITS.map(b=>`<div class="merch-ben"><div class="ic">${icon(b.ic,'icon-lg')}</div><h4>${T(b.t)}</h4><p>${T(b.d)}</p></div>`).join('');
+  const form=$('#merchForm');if(form)form.innerHTML=`<form id="merchApply" onsubmit="return false"><h4 class="fsec">${icon('i-store','icon-sm')} ${T('merch_fsec1')}</h4><div class="row2"><div><label class="lbl">${T('merch_cname')}</label><input class="inp" id="mcName" required></div><div><label class="lbl">${T('merch_ccat')}</label><select class="inp" id="mcCat">${CATS.map(c=>`<option value="${c.id}">${catName(c.id)}</option>`).join('')}</select></div></div><div class="row2"><div><label class="lbl">${T('merch_cexp')}</label><input class="inp" id="mcExp" type="number" placeholder="5"></div><div><label class="lbl">${T('merch_cweb')}</label><input class="inp" id="mcWeb" placeholder="https://"></div></div><h4 class="fsec">${icon('i-box','icon-sm')} ${T('merch_fsec2')}</h4><div class="full"><label class="lbl">${T('merch_pdesc')}</label><textarea class="inp" id="mcDesc" rows="3"></textarea></div><div class="full"><label class="lbl">${T('merch_cert')}</label><input class="inp" id="mcCert" placeholder="HACCP, HALAL"></div><h4 class="fsec">${icon('i-user','icon-sm')} ${T('merch_fsec3')}</h4><div class="row2"><div><label class="lbl">${T('merch_contact_name')}</label><input class="inp" id="mcCN" required></div><div><label class="lbl">${T('merch_contact_title')}</label><input class="inp" id="mcCT"></div></div><div class="row2"><div><label class="lbl">${T('merch_contact_email')}</label><input class="inp" id="mcCE" type="email" required></div><div><label class="lbl">${T('merch_contact_phone')}</label><input class="inp" id="mcCP"></div></div><button type="button" class="btn btn-primary" style="margin-top:18px" id="mcSubmit">${T('merch_submit')}</button></form>`;
+  const sub=$('#mcSubmit');if(sub)sub.onclick=()=>{if(!$('#mcName').value||!$('#mcCE').value){toast(T('not_robot'));return;}toast(T('merch_submitted'));};
+}
+
+/* ===================== RENDER: VERIFY ===================== */
+function renderVerify(){
+  const wrap=$('#verifyWrap');if(!wrap)return;
+  wrap.innerHTML=`<div class="verify-card"><img class="illu" src="${IMAGE_ASSETS}verify_illu.png" alt=""><h2>${T('verify_t')}</h2><p>${T('verify_d')} <span class="em">${state.user.toLowerCase()}@buyer.com</span>.<br>${T('verify_d2')}</p><div class="verify-code">${[0,1,2,3,4,5].map(i=>`<input maxlength="1" id="vc${i}" inputmode="numeric">`).join('')}</div><button class="btn btn-primary btn-block" id="vcSubmit">${T('verify_submit')}</button><p style="margin-top:14px;font-size:13px"><a style="color:var(--color-accent);cursor:pointer" id="vcResend">${T('verify_resend')}</a></p></div>`;
+  const inputs=$$('.verify-code input');
+  inputs.forEach((inp,idx)=>{inp.oninput=()=>{if(inp.value&&idx<5)inputs[idx+1].focus();};inp.onkeydown=e=>{if(e.key==='Backspace'&&!inp.value&&idx>0)inputs[idx-1].focus();};});
+  $('#vcResend').onclick=()=>toast(T('verify_resend'));
+  $('#vcSubmit').onclick=()=>{const code=inputs.map(i=>i.value).join('');if(code.length<6){toast(T('not_robot'));return;}wrap.innerHTML=`<div class="verify-card verify-done"><div style="width:72px;height:72px;border-radius:50%;background:var(--color-accent);color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:16px">${icon('i-check','icon-lg')}</div><h2>${T('verify_done_t')}</h2><p>${T('verify_done_d')}</p><button class="btn btn-primary" style="margin-top:20px" onclick="navigate('account')">${T('verify_go')}</button></div>`;};
+}
+
+/* ===================== RENDER: LEGAL ===================== */
+function renderPrivacy(){
+  const el=$('#privacyDoc');if(!el)return;
+  el.innerHTML=`<h1>${T('privacy_t')}</h1><div class="updated">${T('privacy_updated')}</div><p class="lead">${T('privacy_t')} — Hainan Specialty Industry Export Platform ("Platform", "we") respects your privacy and is committed to protecting your personal data.</p><div class="toc"><a onclick="toast('1. Information We Collect')">1. Information We Collect</a><a onclick="toast('2. How We Use Information')">2. How We Use Information</a><a onclick="toast('3. Cookies & Tracking')">3. Cookies &amp; Tracking</a><a onclick="toast('4. Data Sharing')">4. Data Sharing</a><a onclick="toast('5. Your Rights (GDPR/CCPA)')">5. Your Rights</a><a onclick="toast('6. Contact')">6. Contact</a></div><h2>1. Information We Collect</h2><p>We collect account information (name, email, company), inquiry content, and usage logs necessary to operate the platform.</p><h2>2. How We Use Information</h2><p>To match buyers with verified suppliers, process inquiries, and improve services. We do not sell personal data.</p><h2>3. Cookies &amp; Tracking</h2><p>We use cookies to keep you signed in and remember language/currency preferences.</p><h2>4. Data Sharing</h2><p>We share inquiry details only with the suppliers you contact, and with service providers under contract.</p><h2>5. Your Rights</h2><p>Under GDPR and CCPA you may access, correct, or delete your data by contacting privacy@hainan-export.cn.</p><h2>6. Contact</h2><p>privacy@hainan-export.cn</p>`;
+}
+function renderTerms(){
+  const el=$('#termsDoc');if(!el)return;
+  el.innerHTML=`<h1>${T('terms_t')}</h1><div class="updated">${T('terms_updated')}</div><p class="lead">These Terms of Service govern your use of the Hainan Specialty Industry Export Platform.</p><div class="toc"><a onclick="toast('1. Eligibility')">1. Eligibility</a><a onclick="toast('2. Account')">2. Account</a><a onclick="toast('3. Buyer &amp; Seller Conduct')">3. Buyer &amp; Seller Conduct</a><a onclick="toast('4. Intellectual Property')">4. Intellectual Property</a><a onclick="toast('5. Disclaimers')">5. Disclaimers</a><a onclick="toast('6. Governing Law')">6. Governing Law</a></div><h2>1. Eligibility</h2><p>You must be a business or authorized representative to register.</p><h2>2. Account</h2><p>You are responsible for safeguarding your credentials and all activity under your account.</p><h2>3. Buyer &amp; Seller Conduct</h2><p>Users shall not post false information, circumvent the platform, or engage in fraud.</p><h2>4. Intellectual Property</h2><p>Platform content and trademarks are owned by the Platform and its licensors.</p><h2>5. Disclaimers</h2><p>The Platform is provided "as is". We are not a party to transactions between buyers and sellers.</p><h2>6. Governing Law</h2><p>These terms are governed by the laws of the People's Republic of China.</p>`;
+}
+
+function navigate(route,param){
+  currentRoute=route;currentParam=param;
+  $$('.view').forEach(v=>v.classList.remove('active'));
+  const map={home:'view-home',products:'view-products','product-detail':'view-product-detail',suppliers:'view-suppliers','supplier-detail':'view-supplier-detail',inquiries:'view-inquiries','inq-detail':'view-inq-detail',account:'view-account',merchant:'view-merchant',login:'view-login',privacy:'view-privacy',terms:'view-terms',verify:'view-verify'};
+  let target=map[route]||'view-home';
+  if(!document.getElementById(target))target='view-home';
+  $('#'+target).classList.add('active');
+  $$('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.route===route));
+  if(route==='products')renderProducts();
+  if(route==='product-detail')renderPDetail(param);
+  if(route==='suppliers')renderSuppliers();
+  if(route==='supplier-detail')renderSDetail(param);
+  if(route==='inquiries')renderInquiries();
+  if(route==='inq-detail')renderInqDetail(param);
+  if(route==='account')renderAccount();
+  if(route==='merchant')renderMerchant();
+  if(route==='verify')renderVerify();
+  if(route==='privacy')renderPrivacy();
+  if(route==='terms')renderTerms();
+  if(route==='login'){if(state.loggedIn){toast(T('sign_in'));navigate('home');return;}}
+  window.scrollTo({top:0});
+}
+
+/* ===================== BIND CARDS ===================== */
+function bindCards(){$$('#prodGrid .pcard, #hotGrid .pcard, .rel-grid .pcard, #sdBody .pcard').forEach(c=>c.onclick=()=>navigate('product-detail',c.dataset.pid));}
+function bindSup(){$$('#supGrid .scard, #featSuppliers .scard').forEach(c=>c.onclick=()=>navigate('supplier-detail',c.dataset.sid));}
+
+/* ===================== SORT LABEL ===================== */
+const SORTS=[['default','sort_default'],['new','sort_new'],['priceAsc','sort_price_asc'],['priceDesc','sort_price_desc'],['views','sort_views']];
+function setSortLabel(){const m=SORTS.find(s=>s[0]===state.sort);if($('#sortLabel'))$('#sortLabel').textContent=T(m?m[1]:'sort_default');}
+function setDelivLabel(){if($('#delivLabel'))$('#delivLabel').textContent=T('ship_to')+' '+ (state.deliv==='Global'?T('global'):state.deliv);}
+
+/* ===================== DROPDOWNS ===================== */
+function buildLang(){
+  $('#langMenu').innerHTML=LANGS.map(l=>`<div class="dd-item ${l[0]===state.lang?'sel':''}" data-l="${l[0]}">${l[1]} <span class="tick">${l[0]===state.lang?icon('i-check','icon-sm'):''}</span></div>`).join('');
+  $$('#langMenu .dd-item').forEach(it=>it.onclick=()=>{
+    const l=it.dataset.l;
+    state.lang=l;
+    $('#langCode').textContent=l;
+    $('#langMenu').classList.remove('open');
+    buildLang();
+    document.documentElement.lang=(l==='ZH')?'zh-CN':'en';
+    if(l!=='EN'&&l!=='ZH'){toast('更多语言陆续支持，当前展示英文');}
+    applyI18n();
+    rerender();
+    setSortLabel();setDelivLabel();
+    try{localStorage.setItem('he_lang',l);}catch(e){}
+  });
+}
+function buildCur(){$('#curMenu').innerHTML=Object.keys(RATES).map(c=>`<div class="dd-item ${c===state.cur?'sel':''}" data-c="${c}">${c} — ${CUR_NAME[c]} <span class="tick">${c===state.cur?icon('i-check','icon-sm'):''}</span></div>`).join('');
+  $$('#curMenu .dd-item').forEach(it=>it.onclick=()=>{state.cur=it.dataset.c;$('#curCode').textContent=state.cur;$('#curMenu').classList.remove('open');updatePrices();buildCur();toast('Currency: '+state.cur);});}
+function buildDeliv(){$('#delivMenu').innerHTML=['Global','United States','Germany','Japan','United Arab Emirates','Brazil','Australia'].map(d=>`<div class="dd-item ${d===state.deliv?'sel':''}" data-d="${d}">${icon('i-pin','icon-sm')} ${d}</div>`).join('');
+  $$('#delivMenu .dd-item').forEach(it=>it.onclick=()=>{state.deliv=it.dataset.d;setDelivLabel();$('#delivMenu').classList.remove('open');toast(T('ship_to')+' '+state.deliv);});}
+function updatePrices(){$$('.price').forEach(el=>{const u=+el.dataset.usd;el.textContent=fmt(u);});}
+
+/* ===================== ACCOUNT ===================== */
+function refreshAccount(){
+  if(state.loggedIn){$('#loginBtn').style.display='none';$('#accAvatar').style.display='flex';$('#accAvatar').textContent=state.user[0];$('#nav-inquiry').style.opacity='1';}
+  else{$('#loginBtn').style.display='inline-flex';$('#accAvatar').style.display='none';}
+}
+
+/* ===================== RERENDER CURRENT VIEW ===================== */
+function rerender(){
+  if(currentRoute==='home')renderHome();
+  else if(currentRoute==='products')renderProducts();
+  else if(currentRoute==='product-detail')renderPDetail(currentParam);
+  else if(currentRoute==='suppliers')renderSuppliers();
+  else if(currentRoute==='supplier-detail')renderSDetail(currentParam);
+  else if(currentRoute==='inquiries')renderInquiries();
+  else if(currentRoute==='inq-detail')renderInqDetail(currentParam);
+  else if(currentRoute==='account')renderAccount();
+  else if(currentRoute==='merchant')renderMerchant();
+  else if(currentRoute==='verify')renderVerify();
+  else if(currentRoute==='privacy')renderPrivacy();
+  else if(currentRoute==='terms')renderTerms();
+}
+
+/* ===================== INIT ===================== */
+function init(){
+  try{const saved=localStorage.getItem('he_lang');if(saved)state.lang=saved;}catch(e){}
+  $('#langCode').textContent=state.lang;
+  document.documentElement.lang=(state.lang==='ZH')?'zh-CN':'en';
+  renderHome();buildLang();buildCur();buildDeliv();refreshAccount();
+  applyI18n();setSortLabel();setDelivLabel();
+  $$('[data-route]').forEach(el=>{if(!el.classList.contains('cat-card')&&!el.classList.contains('pcard')&&!el.classList.contains('scard'))el.onclick=()=>navigate(el.dataset.route);});
+  $$('.brand').forEach(b=>b.onclick=()=>navigate('home'));
+  $$('.nav-links a').forEach(a=>a.onclick=()=>navigate(a.dataset.route));
+  $('#heroSearchBtn').onclick=()=>{state.search=$('#heroSearch').value.trim().toLowerCase();state.catFilter='all';navigate('products');};
+  $('#heroSearch').addEventListener('keydown',e=>{if(e.key==='Enter')$('#heroSearchBtn').click();});
+  $$('.chips a').forEach(a=>a.onclick=()=>{state.search=a.dataset.search;$('#heroSearch').value=a.dataset.search;state.catFilter='all';navigate('products');});
+  $$('.spec-card .btn[data-cat]').forEach(b=>b.onclick=()=>{state.catFilter=b.dataset.cat;navigate('products');});
+  $('#langBtn').onclick=e=>{e.stopPropagation();$('#langMenu').classList.toggle('open');$('#curMenu').classList.remove('open');$('#delivMenu').classList.remove('open');};
+  $('#curBtn').onclick=e=>{e.stopPropagation();$('#curMenu').classList.toggle('open');$('#langMenu').classList.remove('open');$('#delivMenu').classList.remove('open');};
+  $('#delivBtn').onclick=e=>{e.stopPropagation();$('#delivMenu').classList.toggle('open');$('#langMenu').classList.remove('open');$('#curMenu').classList.remove('open');};
+  $('#accAvatar').onclick=e=>{e.stopPropagation();$('#accMenu').classList.toggle('open');};
+  $('#accMenu').querySelectorAll('[data-route]').forEach(a=>a.onclick=()=>{navigate(a.dataset.route);$('#accMenu').classList.remove('open');});
+  document.addEventListener('click',()=>{$$('.dd-menu').forEach(m=>m.classList.remove('open'));});
+  ['priceMin','priceMax'].forEach(id=>$('#'+id).addEventListener('input',applyProdFilter));
+  $$('.sup-filter').forEach(c=>c.onchange=()=>{state.supFilter=$$('.sup-filter:checked').map(x=>x.value);applyProdFilter();});
+  $('#sortBtn').onclick=e=>{e.stopPropagation();let m=$('#sortBtn').parentElement.querySelector('.dd-menu');if(!m){m=document.createElement('div');m.className='dd-menu open';m.style.position='absolute';m.style.zIndex=60;SORTS.forEach(s=>{const d=document.createElement('div');d.className='dd-item';d.textContent=T(s[1]);d.onclick=()=>{state.sort=s[0];$('#sortLabel').textContent=T(s[1]);m.remove();applyProdFilter();};m.appendChild(d);});$('#sortBtn').parentElement.appendChild(m);}else m.remove();};
+  $('#tabSignin').onclick=()=>switchTab('in');
+  $('#tabSignup').onclick=()=>switchTab('up');
+  $('#human1').onclick=()=>toggleHuman('human1');
+  $('#human2').onclick=()=>toggleHuman('human2');
+  $('#signinBtn').onclick=()=>{if(!$('#human1').classList.contains('done')){toast(T('not_robot'));return;}state.loggedIn=true;state.user='Global';refreshAccount();$('#accMenu').classList.remove('open');if(pendingInquiry){const p=pendingInquiry;pendingInquiry=null;navigate('product-detail',p);}else navigate('home');toast(T('sign_in'));};
+  $('#signupBtn').onclick=()=>{if(!$('#human2').classList.contains('done')){toast(T('not_robot'));return;}state.loggedIn=true;state.user='Global';refreshAccount();navigate('verify');toast(T('create_account'));};
+  $('#logoutItem').onclick=()=>{state.loggedIn=false;refreshAccount();$('#accMenu').classList.remove('open');navigate('home');toast(T('sign_out'));};
+  const ms=$('#merchStart');if(ms)ms.onclick=()=>{const f=document.getElementById('merchForm');if(f)f.scrollIntoView({behavior:'smooth'});};
+  startHeroSlider();
+}
+let heroIdx=0,heroTimer=null;
+function startHeroSlider(){
+  const slides=$$('.hero-slide'),dots=$$('.hero-dots span');
+  if(!slides.length)return;
+  function show(i){
+    slides.forEach((s,j)=>s.classList.toggle('active',j===i));
+    dots.forEach((d,j)=>d.classList.toggle('active',j===i));
+    heroIdx=i;
+  }
+  if(heroTimer)clearInterval(heroTimer);
+  heroTimer=setInterval(()=>show((heroIdx+1)%slides.length),5000);
+  dots.forEach((d,i)=>d.onclick=()=>{show(i);clearInterval(heroTimer);heroTimer=setInterval(()=>show((heroIdx+1)%slides.length),5000);});
+}
+function switchTab(t){const up=t==='up';$('#tabSignin').classList.toggle('active',!up);$('#tabSignup').classList.toggle('active',up);$('#formSignin').style.display=up?'none':'block';$('#formSignup').style.display=up?'block':'none';}
+function toggleHuman(id){const el=$('#'+id);el.classList.toggle('done');el.querySelector('.box svg').style.display=el.classList.contains('done')?'block':'none';}
+init();
+</script>
+</body>
+</html>
