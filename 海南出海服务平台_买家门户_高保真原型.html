@@ -399,25 +399,61 @@ textarea.inp{height:auto;padding:10px 12px;resize:vertical;line-height:1.6}
 .spec-inline div{font-size:12px;color:var(--c-fg-2)}
 .spec-inline b{color:var(--c-fg);font-weight:600}
 
-/* ---- SUPPLIER CARD ---- */
-.scard{background:#fff;border:1px solid var(--c-border);border-radius:var(--r-lg);padding:20px;cursor:pointer;
-  transition:border-color var(--t-base),transform var(--t-base),box-shadow var(--t-base);display:flex;flex-direction:column}
-.scard:hover{border-color:var(--c-primary);transform:translateY(-3px);box-shadow:var(--e-2)}
-.scard-top{display:flex;gap:14px}
-.slogo{width:62px;height:62px;border-radius:var(--r-md);flex:none;display:flex;align-items:center;justify-content:center;
-  font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px;background-size:cover;background-position:center}
-.sname{font-size:15.5px;font-weight:700;line-height:1.35;color:var(--c-fg)}
+/* ---- SUPPLIERS LIST LAYOUT ---- */
+#supLayout.layout{padding:0;gap:22px;align-items:flex-start}
+#supSide.side{width:270px;position:sticky;top:88px;max-height:calc(100vh - 110px);overflow:auto}
+#supSide.side::-webkit-scrollbar{width:6px}
+#supSide.side::-webkit-scrollbar-thumb{background:var(--c-border);border-radius:3px}
+.filter-card{background:#fff;border:1px solid var(--c-border);border-radius:var(--r-lg);overflow:hidden}
+.filter-head{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--c-border);font-size:14px;font-weight:700;color:var(--c-fg)}
+.filter-sec{padding:14px 16px;border-bottom:1px solid var(--c-border)}
+.filter-sec:last-child{border-bottom:none}
+.filter-title{font-size:12.5px;font-weight:700;color:var(--c-fg-2);margin-bottom:10px}
+.filter-list{display:flex;flex-direction:column;gap:6px}
+.filter-list .fl-item{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:var(--r-sm);font-size:13px;color:var(--c-fg-2);cursor:pointer;transition:all var(--t-fast)}
+.filter-list .fl-item:hover{background:var(--c-primary-softer);color:var(--c-primary)}
+.filter-list .fl-item.on{background:var(--c-primary-soft);color:var(--c-primary-dark);font-weight:600}
+.filter-list .fl-item .cnt{margin-left:auto;font-size:11px;color:var(--c-fg-3);background:var(--c-muted);padding:1px 7px;border-radius:var(--r-full)}
+.filter-list .fl-item.on .cnt{background:#fff;color:var(--c-primary)}
+#supMain.main{flex:1;min-width:0}
+.list-toolbar{background:#fff;border:1px solid var(--c-border);border-radius:var(--r-lg);padding:12px 16px;display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.sup-count{margin-left:auto;font-size:13px;color:var(--c-fg-2);white-space:nowrap}
+.sup-count b{color:var(--c-fg);font-weight:800}
+.sup-list{display:flex;flex-direction:column;gap:14px}
+
+/* ---- SUPPLIER LONG CARD ---- */
+.scard{background:#fff;border:1px solid var(--c-border);border-radius:var(--r-lg);padding:18px;cursor:pointer;
+  transition:border-color var(--t-base),transform var(--t-base),box-shadow var(--t-base)}
+.scard:hover{border-color:var(--c-primary);transform:translateY(-2px);box-shadow:var(--e-2)}
+.scard-inner{display:flex;gap:18px;align-items:stretch}
+.scard-info{flex:1;min-width:0;display:flex;flex-direction:column}
+.scard-top{display:flex;gap:14px;align-items:flex-start}
+.slogo{width:68px;height:68px;border-radius:var(--r-md);flex:none;display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:800;color:#fff;letter-spacing:-.5px;background-size:cover;background-position:center;background-color:var(--c-primary)}
+.sname{font-size:16px;font-weight:700;line-height:1.35;color:var(--c-fg)}
 .scard:hover .sname{color:var(--c-primary)}
-.sname-zh{font-size:12px;color:var(--c-fg-3);margin-top:2px}
+.sname-zh{font-size:12.5px;color:var(--c-fg-3);margin-top:2px}
 .scerts{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
-.scard-cats{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
-.scard-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--c-border)}
-.scard-meta div{text-align:center}
-.scard-meta .n{font-size:16px;font-weight:800;color:var(--c-primary)}
-.scard-meta .l{font-size:11px;color:var(--c-fg-3);margin-top:1px}
-.scard-foot{display:flex;align-items:center;gap:8px;margin-top:14px}
+.scard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.scard-tags .tag{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--c-fg-2);background:var(--c-muted);padding:4px 10px;border-radius:var(--r-sm)}
+.scard-tags .tag .ic{color:var(--c-primary)}
+.scard-meta{display:flex;gap:18px;margin-top:12px;padding-top:12px;border-top:1px solid var(--c-border)}
+.scard-meta .m{display:flex;align-items:center;gap:6px}
+.scard-meta .n{font-size:15px;font-weight:800;color:var(--c-primary)}
+.scard-meta .l{font-size:12px;color:var(--c-fg-3)}
+.scard-foot{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:12px}
 .scard-foot .loc{flex:1;font-size:12px;color:var(--c-fg-2);display:flex;align-items:center;gap:5px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scard-prods{width:340px;flex:none;display:flex;flex-direction:column;gap:8px;border-left:1px solid var(--c-border);padding-left:18px}
+.scard-prods .ptitle{font-size:12px;font-weight:700;color:var(--c-fg-2);display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.scard-prods .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:1}
+.scard-prods .pmini{position:relative;border-radius:var(--r-md);overflow:hidden;background:var(--c-bg-2);aspect-ratio:1/1}
+.scard-prods .pmini .pthumb{width:100%;height:100%;border-radius:0}
+.scard-prods .pmini .pprice{position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,.92);padding:4px 6px;font-size:11px;font-weight:700;color:var(--c-fg);text-align:center}
+.scard-actions{display:flex;flex-direction:column;gap:8px;justify-content:center;padding-left:14px;border-left:1px solid var(--c-border)}
+.scard-actions .btn{height:36px;padding:0 16px;font-size:13px}
+.scard-actions .btn-ghost{background:#fff;border:1px solid var(--c-border);color:var(--c-fg)}
+.scard-actions .btn-ghost:hover{border-color:var(--c-primary);color:var(--c-primary)}
 
 /* ---- FILTER SIDEBAR ---- */
 .layout{display:flex;gap:26px;align-items:flex-start;padding:24px 0 56px}
@@ -545,22 +581,35 @@ table.spec td{color:var(--c-fg);font-weight:500}
 table.spec tr:hover td{background:var(--c-primary-softer)}
 
 /* ---- SUPPLIER DETAIL ---- */
-.sd-banner{height:280px;background-size:cover;background-position:center;position:relative;background-color:#0C2C29}
-.sd-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,42,38,.92) 0%,rgba(8,42,38,.6) 60%,rgba(8,42,38,.25) 100%)}
-.sd-banner .wrap{position:relative;z-index:2;height:100%;display:flex;align-items:flex-end;padding-bottom:28px}
-.sd-id{display:flex;gap:20px;align-items:flex-end;width:100%}
-.sd-logo{width:104px;height:104px;border-radius:var(--r-lg);background:#fff;display:flex;align-items:center;justify-content:center;
-  font-size:32px;font-weight:800;color:var(--c-primary);flex:none;border:3px solid rgba(255,255,255,.3);background-size:cover}
-.sd-id h1{color:#fff;font-size:31px;font-weight:800;letter-spacing:-.7px}
-.sd-id .zh{color:#B7DCD7;font-size:15px;margin-top:4px}
-.sd-id .row{margin-top:12px;gap:8px;flex-wrap:wrap}
-.sd-actions{margin-left:auto;display:flex;gap:10px;align-items:center}
-.sd-kpi{background:#fff;border-bottom:1px solid var(--c-border)}
-.sd-kpi .wrap{display:grid;grid-template-columns:repeat(5,1fr)}
-.sd-kpi div{padding:20px;text-align:center;border-right:1px solid var(--c-border)}
-.sd-kpi div:last-child{border-right:none}
-.sd-kpi .n{font-size:22px;font-weight:800;color:var(--c-primary);letter-spacing:-.5px}
-.sd-kpi .l{font-size:12px;color:var(--c-fg-2);margin-top:3px}
+.sd-banner{min-height:300px;background-size:cover;background-position:center;position:relative;background-color:#0C2C29;padding-bottom:24px}
+.sd-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,42,38,.92) 0%,rgba(8,42,38,.72) 50%,rgba(8,42,38,.45) 100%)}
+.sd-banner .wrap{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:0}
+.sd-id{display:flex;gap:20px;align-items:flex-end;width:100%;padding:28px 0 18px}
+.sd-logo{width:96px;height:96px;border-radius:var(--r-lg);background:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:28px;font-weight:800;color:var(--c-primary);flex:none;border:3px solid rgba(255,255,255,.3);background-size:cover}
+.sd-id h1{color:#fff;font-size:29px;font-weight:800;letter-spacing:-.7px}
+.sd-id .zh{color:#B7DCD7;font-size:14px;margin-top:4px}
+.sd-id .row{margin-top:10px;gap:8px;flex-wrap:wrap}
+.sd-actions{margin-left:auto;display:flex;gap:10px;align-items:center;flex:none}
+.sd-kpi-bar{display:flex;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:var(--r-lg);
+  padding:14px 6px;margin-bottom:24px;backdrop-filter:blur(4px)}
+.sd-kpi-item{flex:1;min-width:110px;padding:6px 16px;border-right:1px solid rgba(255,255,255,.16);text-align:center}
+.sd-kpi-item:last-child{border-right:none}
+.sd-kpi-item .n{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.sd-kpi-item .l{font-size:12px;color:rgba(255,255,255,.82);margin-top:2px}
+.sd-layout{display:grid;grid-template-columns:170px 1fr 320px;gap:26px;align-items:start}
+.sd-nav{position:sticky;top:88px}
+.sd-nav-inner{background:#fff;border:1px solid var(--c-border);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column}
+.sd-nav-inner a{display:flex;flex-direction:column;gap:2px;padding:13px 16px;font-size:13px;font-weight:600;color:var(--c-fg-2);border-bottom:1px solid var(--c-border);transition:all var(--t-fast)}
+.sd-nav-inner a:last-child{border-bottom:none}
+.sd-nav-inner a:hover{background:var(--c-primary-softer);color:var(--c-primary)}
+.sd-nav-inner a.on{background:var(--c-primary-soft);color:var(--c-primary-dark);border-left:3px solid var(--c-primary);padding-left:13px}
+.sd-nav-inner a .zh{font-size:11px;font-weight:500;color:inherit;opacity:.8}
+.sd-content{display:flex;flex-direction:column;gap:22px}
+.sd-sec{background:#fff;border:1px solid var(--c-border);border-radius:var(--r-lg);padding:22px}
+.sd-sec-head{font-size:16px;font-weight:800;color:var(--c-fg);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--c-border);display:flex;align-items:center;gap:8px}
+.sd-sec-head::before{content:'';width:4px;height:18px;background:var(--c-primary);border-radius:2px}
+.sd-side{position:sticky;top:88px}
 .locked{position:relative;overflow:hidden;border-radius:var(--r-md)}
 .locked .blur{filter:blur(5px);user-select:none;pointer-events:none;opacity:.5}
 .lock-ov{position:absolute;inset:0;background:rgba(255,255,255,.72);backdrop-filter:blur(2px);display:flex;
@@ -1496,41 +1545,78 @@ body.lang-zh .en:not([data-i18n]){display:none !important}
           </div>
         </div>
         <div class="wrap" style="padding:26px 0 56px">
-          <div class="card" style="padding:16px 18px;margin-bottom:20px">
-            <div class="row gap12" style="flex-wrap:wrap">
-              <div style="font-size:12.5px;font-weight:700;color:var(--c-fg-2);display:flex;align-items:center;gap:7px">
-                <svg class="ic ic-16" style="color:var(--c-primary)"><use href="#i-funnel"/></svg>Industry 行业分类</div>
-              <div class="row gap8" id="supCatTabs" style="flex-wrap:wrap"></div>
-            </div>
-            <div class="row gap12 mt16" style="padding-top:14px;border-top:1px solid var(--c-border)">
-              <div class="searchbar" style="max-width:420px;height:40px;border-width:1.5px">
-                <input id="supSearch" placeholder="Search supplier name 搜索企业名称（中/英文）" oninput="renderSuppliers()">
-                <button class="sbtn" style="width:46px" aria-label="Search"><svg class="ic ic-18"><use href="#i-search"/></svg></button>
+          <div class="layout" id="supLayout">
+            <!-- LEFT FILTERS -->
+            <aside class="side" id="supSide">
+              <div class="filter-card">
+                <div class="filter-head">
+                  <svg class="ic ic-18"><use href="#i-funnel"/></svg>
+                  <span class="en">Filters</span><span class="zh">筛选条件</span>
+                  <button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="resetSupFilters()">
+                    <span class="en">Reset</span><span class="zh">重置</span>
+                  </button>
+                </div>
+                <div class="filter-sec">
+                  <div class="filter-title"><span class="en">Category</span><span class="zh">行业分类</span></div>
+                  <div class="filter-list" id="supCatFilter"></div>
+                </div>
+                <div class="filter-sec">
+                  <div class="filter-title"><span class="en">Industrial Park</span><span class="zh">所属园区</span></div>
+                  <select class="sel" id="parkSel" style="width:100%;height:40px" onchange="renderSuppliers()">
+                    <option value="">All industrial parks 全部园区</option>
+                    <option>Haikou Comprehensive Bonded Zone 海口综保区</option>
+                    <option>Sanya Cross-border E-commerce Park 三亚跨境电商产业园</option>
+                    <option>Chengmai Software Park 澄迈软件园</option>
+                    <option>Other 其他</option>
+                  </select>
+                </div>
+                <div class="filter-sec">
+                  <div class="filter-title"><span class="en">Platform Service</span><span class="zh">平台服务</span></div>
+                  <label class="chk"><input type="checkbox" id="supVerified" onchange="renderSuppliers()"><span><span class="en">Verified by platform</span><span class="zh">平台核验</span></span></label>
+                  <label class="chk"><input type="checkbox" id="supFastResp" onchange="renderSuppliers()"><span><span class="en">Response ≤ 6h</span><span class="zh">平均响应 ≤ 6h</span></span></label>
+                </div>
+                <div class="filter-sec">
+                  <div class="filter-title"><span class="en">Product Certification</span><span class="zh">产品认证</span></div>
+                  <label class="chk"><input type="checkbox" data-sup-cert="HACCP" onchange="renderSuppliers()"><span>HACCP</span></label>
+                  <label class="chk"><input type="checkbox" data-sup-cert="ISO22000" onchange="renderSuppliers()"><span>ISO22000</span></label>
+                  <label class="chk"><input type="checkbox" data-sup-cert="Organic" onchange="renderSuppliers()"><span><span class="en">Organic</span><span class="zh">有机认证</span></span></label>
+                  <label class="chk"><input type="checkbox" data-sup-cert="GI" onchange="renderSuppliers()"><span><span class="en">GI</span><span class="zh">地理标志</span></span></label>
+                </div>
+                <div class="filter-sec">
+                  <div class="filter-title"><span class="en">Years on Platform</span><span class="zh">企业经营时长</span></div>
+                  <label class="chk"><input type="radio" name="supYrs" value="" checked onchange="renderSuppliers()"><span><span class="en">All</span><span class="zh">不限</span></span></label>
+                  <label class="chk"><input type="radio" name="supYrs" value="5" onchange="renderSuppliers()"><span><span class="en">≤ 5 years</span><span class="zh">5年以下</span></span></label>
+                  <label class="chk"><input type="radio" name="supYrs" value="510" onchange="renderSuppliers()"><span><span class="en">5 - 10 years</span><span class="zh">5-10年</span></span></label>
+                  <label class="chk"><input type="radio" name="supYrs" value="10" onchange="renderSuppliers()"><span><span class="en">≥ 10 years</span><span class="zh">10年以上</span></span></label>
+                </div>
               </div>
-              <select class="sel" id="parkSel" style="width:250px;height:40px" onchange="renderSuppliers()">
-                <option value="">All industrial parks 全部园区</option>
-                <option>Haikou Comprehensive Bonded Zone 海口综保区</option>
-                <option>Sanya Cross-border E-commerce Park 三亚跨境电商产业园</option>
-                <option>Chengmai Software Park 澄迈软件园</option>
-                <option>Other 其他</option>
-              </select>
-              <select class="sel" id="supSort" style="width:210px;height:40px" onchange="renderSuppliers()">
-                <option value="default">Default sorting 默认排序</option>
-                <option value="prod">Most products 产品数最多</option>
-                <option value="year">Longest on platform 入驻最久</option>
-              </select>
-              <div style="margin-left:auto;font-size:13px;color:var(--c-fg-2)">Showing <b id="supCount">0</b> suppliers <span class="muted">共 <span id="supCountZh">0</span> 家企业</span></div>
+            </aside>
+
+            <!-- RIGHT LIST -->
+            <div class="main" id="supMain">
+              <div class="list-toolbar">
+                <div class="searchbar" style="max-width:420px;height:40px;border-width:1.5px;flex:1">
+                  <input id="supSearch" placeholder="Search supplier name 搜索企业名称（中/英文）" oninput="renderSuppliers()">
+                  <button class="sbtn" style="width:46px" aria-label="Search"><svg class="ic ic-18"><use href="#i-search"/></svg></button>
+                </div>
+                <select class="sel" id="supSort" style="width:210px;height:40px" onchange="renderSuppliers()">
+                  <option value="default">Default sorting 默认排序</option>
+                  <option value="prod">Most products 产品数最多</option>
+                  <option value="year">Longest on platform 入驻最久</option>
+                </select>
+                <div class="sup-count"><span class="en">Showing <b id="supCount">0</b> suppliers</span><span class="zh">共 <b id="supCountZh">0</b> 家企业</span></div>
+              </div>
+              <div class="sup-list" id="supplierGrid"></div>
+              <div class="pager">
+                <button disabled><svg class="ic ic-16"><use href="#i-left"/></svg></button>
+                <button class="on">1</button><button onclick="toast('info','Demo prototype shows page 1 only · 原型演示仅呈现第 1 页')">2</button>
+                <button onclick="toast('info','Demo prototype shows page 1 only · 原型演示仅呈现第 1 页')">3</button>
+                <span class="muted" style="padding:0 6px">…</span>
+                <button onclick="toast('info','Demo prototype shows page 1 only · 原型演示仅呈现第 1 页')">16</button>
+                <button onclick="toast('info','Demo prototype shows page 1 only · 原型演示仅呈现第 1 页')"><svg class="ic ic-16"><use href="#i-right"/></svg></button>
+                <span class="info">128 suppliers · 8 per page</span>
+              </div>
             </div>
-          </div>
-          <div class="grid g4" id="supplierGrid"></div>
-          <div class="pager">
-            <button disabled><svg class="ic ic-16"><use href="#i-left"/></svg></button>
-            <button class="on">1</button><button onclick="toast('info','Demo prototype shows page 1 only · 原型演示仅呈现第 1 页')">2</button>
-            <button onclick="toast('info','Demo prototype shows page 1 only · 原型演示仅呈现第 1 页')">3</button>
-            <span class="muted" style="padding:0 6px">…</span>
-            <button onclick="toast('info','Demo prototype shows page 1 only · 原型演示仅呈现第 1 页')">16</button>
-            <button onclick="toast('info','Demo prototype shows page 1 only · 原型演示仅呈现第 1 页')"><svg class="ic ic-16"><use href="#i-right"/></svg></button>
-            <span class="info">128 suppliers · 8 per page</span>
           </div>
         </div>
       </section>
@@ -1541,7 +1627,7 @@ body.lang-zh .en:not([data-i18n]){display:none !important}
           <div class="wrap">
             <div class="sd-id">
               <div class="sd-logo" id="sdLogo">—</div>
-              <div style="padding-bottom:4px">
+              <div style="padding-bottom:4px;flex:1;min-width:0">
                 <div class="crumb" style="padding:0 0 8px;color:rgba(255,255,255,.7)">
                   <a onclick="go('home')" style="color:rgba(255,255,255,.8)">Home</a>
                   <svg class="ic ic-14"><use href="#i-cright"/></svg>
@@ -1557,36 +1643,50 @@ body.lang-zh .en:not([data-i18n]){display:none !important}
                 <button class="btn btn-accent btn-lg" onclick="openInquiry('enterprise')"><svg class="ic ic-18"><use href="#i-chat"/></svg>Send Inquiry 提交询盘</button>
               </div>
             </div>
+            <div class="sd-kpi-bar" id="sdKpiBar"></div>
           </div>
         </div>
-        <div class="sd-kpi"><div class="wrap" id="sdKpi"></div></div>
 
         <div class="wrap" style="padding:26px 0 56px">
-          <div style="display:grid;grid-template-columns:1fr 340px;gap:26px;align-items:start">
-            <div>
-              <div class="tabs" id="sdTabs">
-                <button class="on" onclick="sdTab(this,'sd-about')"><span class="en">Company Profile</span><span class="zh">企业介绍</span></button>
-                <button onclick="sdTab(this,'sd-cert')"><span class="en">Certificates</span><span class="zh">荣誉资质</span></button>
-                <button onclick="sdTab(this,'sd-prod')"><span class="en">Products</span><span class="zh">产品展示</span></button>
-                <button onclick="sdTab(this,'sd-contact')"><span class="en">Contact</span><span class="zh">联系方式</span></button>
+          <div class="sd-layout">
+            <!-- sticky nav -->
+            <aside class="sd-nav">
+              <div class="sd-nav-inner">
+                <a class="on" href="#sd-about" onclick="sdScroll('sd-about',this)"><span class="en">Company Profile</span><span class="zh">企业介绍</span></a>
+                <a href="#sd-cert" onclick="sdScroll('sd-cert',this)"><span class="en">Certificates</span><span class="zh">荣誉资质</span></a>
+                <a href="#sd-prod" onclick="sdScroll('sd-prod',this)"><span class="en">Products</span><span class="zh">产品展示</span></a>
+                <a href="#sd-contact" onclick="sdScroll('sd-contact',this)"><span class="en">Contact</span><span class="zh">联系方式</span></a>
               </div>
-              <div class="tab-panel on" id="sd-about"><div class="rich" id="sdAbout"></div></div>
-              <div class="tab-panel" id="sd-cert">
+            </aside>
+
+            <!-- content flow -->
+            <div class="sd-content">
+              <section class="sd-sec" id="sd-about">
+                <div class="sd-sec-head"><span class="en">Company Profile</span><span class="zh">企业介绍</span></div>
+                <div class="rich" id="sdAbout"></div>
+              </section>
+              <section class="sd-sec" id="sd-cert">
+                <div class="sd-sec-head"><span class="en">Certificates</span><span class="zh">荣誉资质</span></div>
                 <div class="notice"><svg class="ic ic-18"><use href="#i-shield"/></svg>
                   <span>All certificates below were verified by the platform operator during onboarding audit and are re-checked before expiry.<br>以下资质均经平台运营方入驻审核核验，到期前 30/15/7 天自动提醒商家更新。</span></div>
                 <div class="grid g4" id="sdCerts"></div>
-              </div>
-              <div class="tab-panel" id="sd-prod">
+              </section>
+              <section class="sd-sec" id="sd-prod">
+                <div class="sd-sec-head"><span class="en">Products</span><span class="zh">产品展示</span></div>
                 <div class="row gap12" style="margin-bottom:18px">
                   <div style="font-size:14px;font-weight:700">Listed products <span class="muted small" id="sdProdCount"></span></div>
                   <button class="btn btn-sm btn-ghost" style="margin-left:auto" onclick="go('products')">View in Product Center 在产品中心查看</button>
                 </div>
                 <div class="grid g4" id="sdProducts"></div>
-              </div>
-              <div class="tab-panel" id="sd-contact"><div id="sdContact"></div></div>
+              </section>
+              <section class="sd-sec" id="sd-contact">
+                <div class="sd-sec-head"><span class="en">Contact</span><span class="zh">联系方式</span></div>
+                <div id="sdContact"></div>
+              </section>
             </div>
 
-            <div>
+            <!-- sticky sidebar -->
+            <aside class="sd-side">
               <div class="inq-card">
                 <h4>Send inquiry to this supplier</h4>
                 <div class="zh">向该企业提交企业询盘</div>
@@ -1611,7 +1711,7 @@ body.lang-zh .en:not([data-i18n]){display:none !important}
                     <div style="font-size:12px;color:var(--c-fg-3);margin-top:3px;line-height:1.6" id="sdAddr">—</div></div>
                 </div>
               </div>
-            </div>
+            </aside>
           </div>
         </div>
       </section>
@@ -2474,16 +2574,42 @@ function card(p,mode){
 }
 function scard(s){
   const c=catById(s.catId);
+  const prods=PRODUCTS.filter(p=>p.supId===s.id).slice(0,3);
+  const prodsHtml=prods.map(p=>`<div class="pmini" onclick="event.stopPropagation();goProduct(${p.id})">
+      <div class="pthumb" data-bg="${p.img}"></div>
+      <div class="pprice">${fmt(p.price)}</div>
+    </div>`).join('');
+  const tags=[
+    `<span class="tag"><svg class="ic ic-12"><use href="#i-box"/></svg>${s.products} products</span>`,
+    `<span class="tag"><svg class="ic ic-12"><use href="#i-clock"/></svg>${s.resp}</span>`,
+    `<span class="tag"><svg class="ic ic-12"><use href="#i-star"/></svg>${s.rating}</span>`,
+    `<span class="tag"><svg class="ic ic-12"><use href="#i-pin"/></svg>${s.loc}</span>`
+  ];
   return `<div class="scard" onclick="goSupplier(${s.id})">
-    <div class="scard-top"><div class="slogo" style="background:var(--c-primary)">${s.logo}</div>
-      <div><div class="sname">${tName(s)}</div>
-      <div class="scerts">${s.certs.map(x=>`<span class="badge badge-success" style="height:18px">${x}</span>`).join('')}</div></div></div>
-    <div class="scard-cats"><span class="badge badge-primary" style="height:20px">${c.en}</span></div>
-    <div class="scard-meta"><div><div class="n">${s.products}</div><div class="l">Products 产品</div></div>
-      <div><div class="n">${s.yrs}y</div><div class="l">On platform 入驻</div></div>
-      <div><div class="n">${s.rating}</div><div class="l">Rating 评分</div></div></div>
-    <div class="scard-foot"><span class="loc"><svg class="ic ic-14"><use href="#i-pin"/></svg>${s.loc}</span>
-      <span class="badge badge-primary" style="height:20px"><svg class="ic ic-14"><use href="#i-clock"/></svg>${s.resp}</span></div>
+    <div class="scard-inner">
+      <div class="scard-info">
+        <div class="scard-top">
+          <div class="slogo" style="background-color:var(--c-primary)">${s.logo}</div>
+          <div style="min-width:0">
+            <div class="sname">${tName(s)}</div>
+            <div class="sname-zh">${s.en}</div>
+            <div class="scerts">${s.certs.map(x=>`<span class="badge badge-success" style="height:18px">${x}</span>`).join('')}<span class="badge badge-primary" style="height:18px">${c.en}</span></div>
+          </div>
+        </div>
+        <div class="scard-tags">${tags.join('')}</div>
+        <div class="scard-foot">
+          <span class="loc"><svg class="ic ic-14"><use href="#i-shield"/></svg>Verified by platform · ${s.yrs} years on platform</span>
+        </div>
+      </div>
+      <div class="scard-prods">
+        <div class="ptitle"><svg class="ic ic-14"><use href="#i-box"/></svg>Hot products 热销产品</div>
+        <div class="pgrid">${prodsHtml||'<div style="color:var(--c-fg-3);font-size:12px">No products listed</div>'}</div>
+      </div>
+      <div class="scard-actions" onclick="event.stopPropagation();">
+        <button class="btn btn-accent" onclick="openInquiry('enterprise');event.stopPropagation();"><svg class="ic ic-16"><use href="#i-chat"/></svg>Send Inquiry</button>
+        <button class="btn btn-ghost" onclick="goSupplier(${s.id})">View profile</button>
+      </div>
+    </div>
   </div>`;
 }
 
@@ -2590,15 +2716,40 @@ function renderSuppliers(){
   if(q) list=list.filter(s=>(s.en+' '+s.zh).toLowerCase().includes(q));
   const park=$('parkSel')?$('parkSel').value:''; if(park) list=list.filter(s=>s.park.includes(park.split(' ')[0]));
   const sort=$('supSort')?$('supSort').value:''; if(sort==='prod')list.sort((a,b)=>b.products-a.products); else if(sort==='year')list.sort((a,b)=>b.yrs-a.yrs);
-  // category tab
+  // category
   if(window._supCat) list=list.filter(s=>s.catId===window._supCat);
-  $('supplierGrid').innerHTML=list.map(s=>scard(s)).join('')||`<div class="empty" style="grid-column:1/-1"><div class="ci"><svg class="ic ic-36"><use href="#i-buildings"/></svg></div><h4>No suppliers</h4></div>`;
+  // platform service filters
+  if($('supVerified')&&$('supVerified').checked) list=list.filter(s=>s.certs.length>0);
+  if($('supFastResp')&&$('supFastResp').checked){ list=list.filter(s=>{ const h=parseFloat(s.resp); return !isNaN(h)&&h<=6; }); }
+  // product certifications
+  const reqCerts=qa('#p-suppliers input[data-sup-cert]').filter(i=>i.checked).map(i=>i.dataset.supCert);
+  if(reqCerts.length) list=list.filter(s=>reqCerts.every(c=>s.certs.includes(c)));
+  // years on platform
+  const yrsRadio=qa('input[name="supYrs"]').find(i=>i.checked); const yrs=yrsRadio?yrsRadio.value:'';
+  if(yrs==='5') list=list.filter(s=>s.yrs<=5);
+  else if(yrs==='510') list=list.filter(s=>s.yrs>5&&s.yrs<=10);
+  else if(yrs==='10') list=list.filter(s=>s.yrs>10);
+  $('supplierGrid').innerHTML=list.map(s=>scard(s)).join('')||`<div class="empty" style="padding:60px 0"><div class="ci"><svg class="ic ic-36"><use href="#i-buildings"/></svg></div><h4>No suppliers</h4><p>Try adjusting filters. 没有匹配企业，请调整筛选条件。</p></div>`;
   $('supCount').textContent=list.length; $('supCountZh').textContent=list.length;
-  // category tabs
-  $('supCatTabs').innerHTML=`<button class="cat-pick ${!window._supCat?'on':''}" onclick="setSupCat(null)">All 全部</button>`+CATS.map(c=>`<button class="cat-pick ${window._supCat===c.id?'on':''}" onclick="setSupCat(${c.id})"><svg class="ic ic-16"><use href="#i-leaf"/></svg>${tName(c)}</button>`).join('');
+  // category filter sidebar
+  const catFilter=$('supCatFilter'); if(catFilter){
+    catFilter.innerHTML=`<div class="fl-item ${!window._supCat?'on':''}" onclick="setSupCat(null)"><span class="en">All categories</span><span class="zh">全部分类</span><span class="cnt">${SUPPLIERS.length}</span></div>`+
+      CATS.map(c=>`<div class="fl-item ${window._supCat===c.id?'on':''}" onclick="setSupCat(${c.id})">${tName(c)}<span class="cnt">${SUPPLIERS.filter(s=>s.catId===c.id).length}</span></div>`).join('');
+  }
   applyBgs();
 }
 function setSupCat(id){ window._supCat=id; renderSuppliers(); }
+function resetSupFilters(){
+  window._supCat=null;
+  if($('supSearch'))$('supSearch').value='';
+  if($('parkSel'))$('parkSel').value='';
+  if($('supSort'))$('supSort').value='default';
+  if($('supVerified'))$('supVerified').checked=false;
+  if($('supFastResp'))$('supFastResp').checked=false;
+  qa('#p-suppliers input[data-sup-cert]').forEach(i=>i.checked=false);
+  const allYrs=qa('input[name="supYrs"]').find(i=>i.value===''); if(allYrs)allYrs.checked=true;
+  renderSuppliers();
+}
 
 /* ---------- SUPPLIER DETAIL ---------- */
 function goSupplier(id){ curSup=id; idSupIdx=id; go('supplier'); }
@@ -2606,7 +2757,7 @@ function renderSupplier(id){
   const s=supById(id); if(!s)return; const c=catById(s.catId);
   $('sdLogo').textContent=s.logo; $('sdCrumb').textContent=s.en; $('sdName').textContent=s.en; $('sdNameZh').textContent=s.zh;
   $('sdBadges').innerHTML=s.certs.map(x=>`<span class="badge badge-accent" style="background:rgba(255,255,255,.18);color:#fff">${x}</span>`).join('')+`<span class="badge" style="background:rgba(255,255,255,.18);color:#fff">${tName(c)}</span>`;
-  $('sdKpi').innerHTML=`<div class="sd-kpi-item"><div class="n">${s.products}</div><div class="l">Products 在架产品</div></div>
+  const kpiBar=$('sdKpiBar'); if(kpiBar) kpiBar.innerHTML=`<div class="sd-kpi-item"><div class="n">${s.products}</div><div class="l">Products 在架产品</div></div>
     <div class="sd-kpi-item"><div class="n">${s.yrs}y</div><div class="l">On platform 入驻年限</div></div>
     <div class="sd-kpi-item"><div class="n">${s.rating}</div><div class="l">Rating 平均评分</div></div>
     <div class="sd-kpi-item"><div class="n">${s.resp}</div><div class="l">Response 平均响应</div></div>
@@ -2625,10 +2776,17 @@ function renderSupplier(id){
     ${(auth==='guest'||auth==='unverified')?'<div class="notice" style="margin-top:4px"><svg class="ic ic-16"><use href="#i-lock"/></svg><span>Contact details are masked for unverified buyers. 未验证买家联系方式已脱敏，登录并验证后可见。</span></div>':''}
   </div>`;
   $('sdPark').textContent=s.park; $('sdAddr').textContent=s.loc+' · Haikou Comprehensive Bonded Zone logistics 海口综保区物流支持';
-  sdTab(null,'sd-about');
+  // reset nav active state
+  qa('.sd-nav-inner a').forEach(a=>a.classList.remove('on')); const first=qa('.sd-nav-inner a')[0]; if(first)first.classList.add('on');
   applyBgs();
 }
-function sdTab(btn,id){ qa('#sdTabs button').forEach(b=>b.classList.remove('on')); if(btn)btn.classList.add('on'); qa('#p-supplier .tab-panel').forEach(p=>p.classList.remove('on')); $(id).classList.add('on'); }
+function sdScroll(id,el){
+  if(el){ event.preventDefault(); qa('.sd-nav-inner a').forEach(a=>a.classList.remove('on')); el.classList.add('on'); }
+  const target=$(id); if(!target)return;
+  const headerH=76; const pad=16;
+  const top=target.getBoundingClientRect().top + window.scrollY - headerH - pad;
+  window.scrollTo({top:top,behavior:'smooth'});
+}
 
 /* ---------- INQUIRY MODAL + SUBMIT ---------- */
 function openInquiry(type,pid){
